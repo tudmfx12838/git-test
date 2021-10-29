@@ -1,0 +1,7 @@
+Github
+https://github.com/tudmfx12838/git-test.git
+
+commit -m: fourth commit
+hash: 678505a
+
+noi dung thuc hien: khoi tao package.json, cai lite-server, thiet lap run lite-server trong package.json, tao file .gitignore va them vao noi dung "node_modules" de bo qua folder node_modules.

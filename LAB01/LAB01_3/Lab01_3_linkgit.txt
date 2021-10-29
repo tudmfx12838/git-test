@@ -1,0 +1,5 @@
+Github
+https://github.com/tudmfx12838/git-test.git
+
+Bitbucket
+https://dangminhtufx12838@bitbucket.org/dangminhtufx12838/git-test.git

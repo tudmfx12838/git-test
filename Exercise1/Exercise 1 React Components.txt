@@ -1,0 +1,6 @@
+link git: https://github.com/tudmfx12838/git-test.git
+
+branch: React
+folder: confusion
+commit: f818d6a5400842c10c8a50693c3810ede10768d8
+description: Exercise 1: React Components

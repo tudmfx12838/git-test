@@ -1,10 +1,11 @@
 import logo from './logo.svg';
 import { Navbar, NavbarBrand } from 'reactstrap';
+import Menu  from './components/MenuComponent';
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
+    <div>
       {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
@@ -27,6 +28,7 @@ function App() {
             </NavbarBrand>
           </div>
         </Navbar>
+        <Menu />
     </div>
   );
 }

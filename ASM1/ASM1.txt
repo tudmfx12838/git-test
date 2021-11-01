@@ -1,0 +1,8 @@
+Author: Dang Minh Tu
+ID: FX12838
+email: tudmfx12838@funix.edu.vn
+
+Project:  Assessment 1
+link git: https://github.com/tudmfx12838/git-test.git
+branch: RJS101x_Assignment1_tudmFX12838@funix.edu.vn
+commit: bbc0d7d225ac723f5651661589d535665ecfed86

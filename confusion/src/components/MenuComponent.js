@@ -9,12 +9,12 @@ class Menu extends Component{
         console.log("Menu's constructor is invoked");       
     }
 
-    // componentDidMount(){
-    //     console.log("componentDidMount is invoked");
-    // }
+    componentDidMount(){
+        console.log("Menu's componentDidMount is invoked");
+    }
 
     render(){
-        // console.log("render is invoked"); 
+        console.log("Menu's render is invoked"); 
 
         const menu = this.props.dishes.map((dish) => {
             return (

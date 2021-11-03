@@ -2,12 +2,21 @@ import React, { Component } from "react";
 import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from 'reactstrap';
 
 class DishDetail extends Component{
-    constructor(props){
-        super(props);
+    // constructor(props){
+    //     super(props);
 
-        console.log("DishDetail's constructor is invoked");       
+    //     console.log("DishDetail's constructor is invoked");       
+    // }
+    componentDidMount(){
+        console.log("DishDetail's componentDidMount is invoked");
     }
 
+    componentDidUpdate(){
+        console.log("DishDetail's componentDidUpdate is invoked");
+    }
+
+
+    
     renderDish(dish){
         if(dish != null){
             const comment = dish.comments.map((commentElement)=>{
@@ -46,6 +55,8 @@ class DishDetail extends Component{
         }
     }
     render(){
+        console.log("DishDetail's render is invoked");
+
         return(
             <div className="container">
                 {this.renderDish(this.props.dish)}

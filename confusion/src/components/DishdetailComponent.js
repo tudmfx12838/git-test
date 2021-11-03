@@ -1,68 +1,55 @@
-import React, { Component } from "react";
+import React from 'react';
 import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from 'reactstrap';
 
-class DishDetail extends Component{
-    // constructor(props){
-    //     super(props);
 
-    //     console.log("DishDetail's constructor is invoked");       
-    // }
-    componentDidMount(){
-        console.log("DishDetail's componentDidMount is invoked");
-    }
+function RenderDish({dish}) {
+    return(
+        <Card>
+            <CardImg width="100%" src={dish.image} alt={dish.name}/>
+            <CardBody>
+                <CardTitle>{dish.name}</CardTitle>
+                <CardText>{dish.description}</CardText>
+            </CardBody>
+        </Card>   
+    );
+}
 
-    componentDidUpdate(){
-        console.log("DishDetail's componentDidUpdate is invoked");
-    }
+function RenderComments({comments}) {
+    return(
+        <CardText>{comments.comment} <br></br>
+        --{comments.author},{new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comments.date)))}</CardText>
+    );
+};
 
 
-    
-    renderDish(dish){
-        if(dish != null){
-            const comment = dish.comments.map((commentElement)=>{
-                return(
-                    <div key={commentElement.id}>
-                        <CardText>{commentElement.comment}</CardText>
-                        <CardText>--{commentElement.author},{new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(commentElement.date)))}</CardText>
-                        {/* {commentElement.date} */}
-                        <br></br>
-                    </div>
-                );
-            });
-
+const DishDetail = (props) => {
+    if(props.dish != null){
+        const comment = props.dish.comments.map((commentElement)=>{
             return(
-            <div className="row">
-                <div className="col-12 col-md-5 m-1">
-                    <Card >
-                        <CardImg width="100%" src={dish.image} alt={dish.name}/>
-                        <CardBody>
-                            <CardTitle>{dish.name}</CardTitle>
-                            <CardText>{dish.description}</CardText>
-                        </CardBody>
-                    </Card>
+                <div key={commentElement.id}>
+                        <RenderComments comments={commentElement}/>
+                    <br></br>
                 </div>
-
-                <div className="col-12 col-md-5 m-1"> 
-                    <CardTitle className="text-center">Comments</CardTitle>
-                    {comment}
-                </div>
-            </div>
             );
-        }else{
-            return(
-                <div></div>
-            );
-        }
-    }
-    render(){
-        console.log("DishDetail's render is invoked");
+        });
 
         return(
             <div className="container">
-                {this.renderDish(this.props.dish)}
+                <div className="row">
+                    <div className="col-12 col-md-5 m-1">
+                        <RenderDish dish={props.dish}/>
+                    </div>
+                    <div className="col-12 col-md-5 m-1">
+                        <Card>
+                            <CardTitle>Comments</CardTitle>
+                            {comment}
+                        </Card>
+                    </div>
+                </div>
             </div>
-
-            );
+        );
+    }else{
+        return(<div></div>);
     }
 }
 

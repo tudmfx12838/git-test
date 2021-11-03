@@ -1,0 +1,6 @@
+link git: https://github.com/tudmfx12838/git-test.git
+
+branch: React
+folder: confusion
+commit: ae2aa392aba2ce58ea362d7f8c5cceec17cb8f03
+description: Lifecycle Methods Part 2

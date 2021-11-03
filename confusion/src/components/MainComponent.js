@@ -1,10 +1,10 @@
-import { Navbar, NavbarBrand } from 'reactstrap';
+import React, {Component} from 'react';
+import Header from './HeaderComponet';
+import Footer from './FooterComponent';
 import Menu  from './MenuComponent';
 import DishDetail from './DishdetailComponent';
 import { DISHES } from './shared/dishes';
-import { Component } from 'react/cjs/react.production.min';
-
-// function App() {
+// import { Component } from 'react/cjs/react.production.min';
 
 class Main extends Component {
   
@@ -23,19 +23,17 @@ class Main extends Component {
 
   render(){
     return (
-      <div>
-          <Navbar dark color="primary">
-            <div className="container">
-              <NavbarBrand href="/">
-                  Ristorante Con Fustion
-              </NavbarBrand>
-            </div>
-          </Navbar>
+      // <div>
+      <React.Fragment>
+          <Header />
           <Menu dishes={this.state.dishes}
                 onClick={(dishid) => this.onDishSelect(dishid)}
           />
           <DishDetail dish={this.state.dishes.filter((dish) => dish.id === this.state.selectedDish)[0]}/>
-      </div>
+
+          <Footer />
+      </React.Fragment>
+      // </div>
     );
   }
 }

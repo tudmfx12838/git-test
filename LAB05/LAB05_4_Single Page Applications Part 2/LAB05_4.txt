@@ -1,0 +1,6 @@
+link git: https://github.com/tudmfx12838/git-test.git
+
+branch: React
+folder: confusion
+commit: 019cb7b6c07f93afc14f3f6ab5720c5b813e1be2
+description: Single Page Applications Part 2

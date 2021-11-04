@@ -23,7 +23,7 @@ class Header extends Component{
 
     render(){
         return(
-            <>
+            <React.Fragment>
             <Navbar dark expand="md">
                 <div className="container">
                 {/* NavbarToggler show list button when the srceen size is following <Navbar dark expand="md"> (sm,lg..) */}
@@ -70,7 +70,7 @@ class Header extends Component{
                     </div>
                 </div>
             </Jumbotron>
-            </>
+            </React.Fragment>
         );
     }
 }

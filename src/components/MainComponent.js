@@ -17,9 +17,9 @@ class Main extends Component {
     this.state = {
       staffs: STAFFS,
       departments: DEPARTMENTS,
+      SelectedSort: null
     }
   }
-
   render(){
 
     const StaffWithId = ({match}) => {

@@ -15,7 +15,7 @@ function Contact(props) {
                         <address>
                         Hiroshima<br />
                         Hiroshima city<br />
-                        HONG KONG<br />
+                        Japan<br />
                         <i className="fa fa-phone"></i>: +852 1234 5678<br />
                         <i className="fa fa-fax"></i>: +852 8765 4321<br />
                         <i className="fa fa-envelope"></i>: <a href="mailto:tudmfx12838@funix.edu.vn">tudmfx12838@funix.edu.vn</a>

@@ -7,11 +7,16 @@ import { Link } from 'react-router-dom';
 
 function RenderDepartment({department}){
     return(
-        <Card className="bg-light mr-0" width="100%" >
-                <CardTitle>{department.name}</CardTitle>
-                <CardText className="text-center">Số lượng nhân viên: {department.numberOfStaff}</CardText>
-        </Card>
+        // <Card className="bg-light mr-0" width="100%" >
+        //         <CardTitle>{department.name}</CardTitle>
+        //         <CardText className="text-center">Số lượng nhân viên: {department.numberOfStaff}</CardText>
+        // </Card>
+        <div className="border p-3 bg-warning">
+            <h2>{department.name}</h2>
+            <p  className="text-center">Số lượng nhân viên: {department.numberOfStaff}</p>
+        </div>
     );
+
 } 
 
 //function Department(props)/({staffs})

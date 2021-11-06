@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 function RenderStaff({staff}){
     return(
-        <Card className="bg-light">
+        <Card className="bg-warning">
             <Link to={`/staff/${staff.id}`}>
                 <CardImg src={staff.image} alt={staff.name} className="mr-5"/>
                 <CardText className="text-center"><b>{staff.name}</b></CardText>

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 function RenderStaff({staff}){
     return(
-        <Media>
+        <Media className="border p-1 bg-warning">
             <Media left>
                 <Media object src={staff.image} width="100%" height="230" className="align-self-start mr-5" alt={staff.name}/>
             </Media>

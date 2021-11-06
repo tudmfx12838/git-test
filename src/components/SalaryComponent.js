@@ -18,20 +18,20 @@ function RenderSalary({staff}){
         //             </Card>
         //         </div>
         //         <CardImg src={staff.image} alt={staff.name}/>
-
-
         // </Card>
-        <Media className="border p-3">
+        <Media className="border p-3 bg-warning">
                 <Media body>
                     <Media heading>{staff.name}</Media>
-                    <p>Mã nhân viên: {staff.id}</p>
-                    <p>Hệ số lương: {staff.salaryScale}</p>
-                    <p>Số giờ làm thêm: {staff.overTime}</p>
-                    <div>
-                        <p>Lương: {staff.salary}usd</p>
+                    <div className="p-3">
+                        <p>--Mã nhân viên: {staff.id}</p>
+                        <p>--Hệ số lương: {staff.salaryScale}</p>
+                        <p>--Số giờ làm thêm: {staff.overTime}</p>
+                        <div className="border align-bottom mt-5">
+                            <p>Lương: {staff.salary}usd</p>
+                        </div> 
                     </div> 
                 </Media>
-                <Media object src={staff.image} className="ml-3 mt-3 rounded-circle" width="60px"/>
+                <Media object src={staff.image} className="mt-3 mr-3 rounded-circle" width="80px"/>
         </Media>
 
     );

@@ -8,8 +8,8 @@ function RenderStaff({staff}){
     return(
         <Card className="bg-light">
             <Link to={`/staff/${staff.id}`}>
-                <CardImg src={staff.image} alt={staff.name}/>
-                <CardText className="text-left"><b>{staff.name}</b></CardText>
+                <CardImg src={staff.image} alt={staff.name} className="mr-5"/>
+                <CardText className="text-center"><b>{staff.name}</b></CardText>
             </Link>
         </Card>
     );

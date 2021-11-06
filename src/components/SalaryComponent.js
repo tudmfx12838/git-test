@@ -1,21 +1,39 @@
 import React from 'react';
 import dateFormat from 'dateformat';
 import Select from 'react-select';
-import { Card, CardText, CardBody, CardTitle, CardImg, Breadcrumb, BreadcrumbItem, CardBlock } from 'reactstrap';
+import { Card, CardText, CardBody, CardTitle, CardImg, Breadcrumb, BreadcrumbItem, CardBlock, Media } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
 
 function RenderSalary({staff}){
     return(
-        <Card className="bg-light container-fluid">
-                <CardTitle>{staff.name}</CardTitle>
-                <CardText className="text-left">Mã nhân viên: {staff.id}</CardText>
-                <CardText className="text-left">Hệ số lương: {staff.salaryScale}</CardText>
-                <CardText className="text-left">Số giờ làm thêm: {staff.overTime}</CardText>
-                <Card>
-                    <CardText className="text-left">Lương: {staff.salary}usd</CardText>
-                </Card>
-        </Card>
+        // <Card className="bg-light">
+        //         <CardTitle>{staff.name}</CardTitle>
+        //         <div className="p-2">
+        //             <CardText className="text-left">Mã nhân viên: {staff.id}</CardText>
+        //             <CardText className="text-left">Hệ số lương: {staff.salaryScale}</CardText>
+        //             <CardText className="text-left">Số giờ làm thêm: {staff.overTime}</CardText>
+        //             <Card>
+        //                 <CardText className="text-left">Lương: {staff.salary}usd</CardText>
+        //             </Card>
+        //         </div>
+        //         <CardImg src={staff.image} alt={staff.name}/>
+
+
+        // </Card>
+        <Media className="border p-3">
+                <Media body>
+                    <Media heading>{staff.name}</Media>
+                    <p>Mã nhân viên: {staff.id}</p>
+                    <p>Hệ số lương: {staff.salaryScale}</p>
+                    <p>Số giờ làm thêm: {staff.overTime}</p>
+                    <div>
+                        <p>Lương: {staff.salary}usd</p>
+                    </div> 
+                </Media>
+                <Media object src={staff.image} className="ml-3 mt-3 rounded-circle" width="60px"/>
+        </Media>
+
     );
 } 
 

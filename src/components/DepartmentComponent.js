@@ -7,9 +7,9 @@ import { Link } from 'react-router-dom';
 
 function RenderDepartment({department}){
     return(
-        <Card className="bg-light container-fluid">
+        <Card className="bg-light mr-0" width="100%" >
                 <CardTitle>{department.name}</CardTitle>
-                <CardText className="text-left">Số lượng nhân viên: {department.numberOfStaff}</CardText>
+                <CardText className="text-center">Số lượng nhân viên: {department.numberOfStaff}</CardText>
         </Card>
     );
 } 

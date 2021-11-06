@@ -7,7 +7,7 @@ function RenderStaff({staff}){
     return(
         <Media>
             <Media left>
-                <Media object src={staff.image} width="100%" height="auto" className="align-self-start mr-5" alt={staff.name}/>
+                <Media object src={staff.image} width="100%" height="230" className="align-self-start mr-5" alt={staff.name}/>
             </Media>
             <Media body className="text-justify ml-3">
                 <Media heading> Họ và tên: <i>{staff.name}</i></Media>

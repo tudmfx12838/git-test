@@ -32,7 +32,7 @@ class Main extends Component {
       <React.Fragment>
           <Header />
           <Switch>
-            {/* Adding exact that mean when render more  */}
+            {/* Adding exact that mean when render more links with the same path of head Ex: /staff/1 /staff/2*/}
             <Route exact path="/staff" component={()=><StaffList staffs={this.state.staffs} />}/>
             <Route path="/department" component={()=><Department departments={this.state.departments}/>}/>
             <Route path="/salary" component={()=><Salary staffs={this.state.staffs}/>}/>

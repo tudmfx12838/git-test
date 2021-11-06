@@ -7,9 +7,9 @@ function RenderStaff({staff}){
     return(
         <Media>
             <Media left>
-                <Media object src={staff.image} className="align-self-start mr-5" alt={staff.name}/>
+                <Media object src={staff.image} width="100%" height="auto" className="align-self-start mr-5" alt={staff.name}/>
             </Media>
-            <Media body className="text-justify">
+            <Media body className="text-justify ml-3">
                 <Media heading> Họ và tên: <i>{staff.name}</i></Media>
                 <p> Ngày sinh: <i>{dateFormat(staff.doB, "dd/mm/yyyy")}</i></p>
                 <p> Ngày vào công ty: <i>{dateFormat(staff.startDate, "dd/mm/yyyy")}</i></p>
@@ -24,7 +24,17 @@ function RenderStaff({staff}){
 const StaffDetail = ({staff}) => {
 
     return(
-        <div className="Container">
+        <div className="container">
+            <div className="row">
+                <Breadcrumb>
+                    <BreadcrumbItem><Link to="/staff">Nhân Viên</Link></BreadcrumbItem>
+                    <BreadcrumbItem active>{staff.name}</BreadcrumbItem>
+                </Breadcrumb>
+                <div className="col-12">
+                    <h3>{staff.name}</h3>
+                    <hr />
+                </div>
+            </div>
              <div className="row">
                 <RenderStaff staff={staff}/>
              </div>

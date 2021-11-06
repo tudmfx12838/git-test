@@ -75,6 +75,7 @@ class Salary extends Component{
         var salary = [];
         switch(this.state.selectedSort){
             case 0:
+                salary = [];
                 salary = this.props.staffs.map((staff) => {
                     return(
                         <div key={staff.id} className="col-12 col-md-6 col-lg-4 my-1">
@@ -84,6 +85,7 @@ class Salary extends Component{
                 });
                 break;
             case 1:
+                salary = [];
                 salary = this.props.staffs.map((staff) => {
                     return(
                         <div key={staff.id} className="col-12 col-md-6 col-lg-4 my-1">
@@ -93,6 +95,7 @@ class Salary extends Component{
                 }).reverse();
                 break;
             case 2:
+                salary = [];
                 var mimToMaxSalary = [];
                 for(let i=0; i < this.props.staffs.length ;i++){
                     mimToMaxSalary[i] = this.props.staffs[i].salary;
@@ -112,6 +115,7 @@ class Salary extends Component{
                 }
                 break;
             case 3:
+                salary = [];
                 var mimToMaxSalary = [];
                 for(let i=0; i < this.props.staffs.length ;i++){
                     mimToMaxSalary[i] = this.props.staffs[i].salary;
@@ -133,7 +137,7 @@ class Salary extends Component{
             default:
                 break;
         }
-        
+
         const options = [
             { value: '0', label: 'Sắp xếp theo thứ tự nhân viên (thuận)' },
             { value: '1', label: 'Sắp xếp theo thứ tự nhân viên (nghịch)' },

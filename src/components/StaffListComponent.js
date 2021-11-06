@@ -1,7 +1,7 @@
 import React from 'react';
 import dateFormat from 'dateformat';
 import Select from 'react-select';
-import { Card, CardText, CardBody, CardTitle, CardImg, Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import { Card, CardText, CardBody, CardTitle, CardImg, Breadcrumb, BreadcrumbItem, Input } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
 function RenderStaff({staff}){
@@ -16,6 +16,7 @@ function RenderStaff({staff}){
 } 
 
 //function StaffList(props)/({staffs})
+var temp = {};
 const StaffList = ({staffs}) => {
     const staff = staffs.map((staff) => {
         return(
@@ -24,6 +25,8 @@ const StaffList = ({staffs}) => {
             </div>
         );
     });
+
+
 
     return(
         <div className="container">

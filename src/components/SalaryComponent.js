@@ -73,6 +73,13 @@ class Salary extends Component{
 
     render(){
         var salary = [];
+        var getSalary = [];
+        for(let i=0; i < this.props.staffs.length ;i++){
+            getSalary[i] = this.props.staffs[i].salary;
+        }   
+        //remove duplicate element array
+        getSalary = [...new Set(getSalary)];
+
         switch(this.state.selectedSort){
             case 0:
                 salary = [];
@@ -96,15 +103,11 @@ class Salary extends Component{
                 break;
             case 2:
                 salary = [];
-                var mimToMaxSalary = [];
-                for(let i=0; i < this.props.staffs.length ;i++){
-                    mimToMaxSalary[i] = this.props.staffs[i].salary;
-                }   
-                mimToMaxSalary.sort(function(a, b){return a-b});
-                
-                for(let i = 0; i < mimToMaxSalary.length ;i++){
+                getSalary.sort(function(a, b){return a-b});
+
+                for(let i = 0; i < getSalary.length ;i++){
                     salary[i] = this.props.staffs.map((staff) => {
-                        if(staff.salary==mimToMaxSalary[i]){
+                        if(staff.salary==getSalary[i]){
                             return(
                                 <div key={staff.id} className="col-12 col-md-6 col-lg-4 my-1">
                                     <RenderSalary staff={staff}/>
@@ -115,16 +118,12 @@ class Salary extends Component{
                 }
                 break;
             case 3:
-                salary = [];
-                var mimToMaxSalary = [];
-                for(let i=0; i < this.props.staffs.length ;i++){
-                    mimToMaxSalary[i] = this.props.staffs[i].salary;
-                }   
-                mimToMaxSalary.sort(function(a, b){return b-a});
+                salary = [];  
+                getSalary.sort(function(a, b){return b-a});
                 
-                for(let i = 0; i < mimToMaxSalary.length ;i++){
+                for(let i = 0; i < getSalary.length ;i++){
                     salary[i] = this.props.staffs.map((staff) => {
-                        if(staff.salary==mimToMaxSalary[i]){
+                        if(staff.salary==getSalary[i]){
                             return(
                                 <div key={staff.id} className="col-12 col-md-6 col-lg-4 my-1">
                                     <RenderSalary staff={staff}/>

@@ -26,8 +26,6 @@ const StaffList = ({staffs}) => {
         );
     });
 
-
-
     return(
         <div className="container">
             <div className="row">

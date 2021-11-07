@@ -1,0 +1,10 @@
+Author: Dang Minh Tu
+ID: FX12838
+email: tudmfx12838@funix.edu.vn
+
+Project:  Assessment 2
+link git: https://github.com/tudmfx12838/git-test.git
+branch: RJS101x_Assignment2_tudmFX12838@funix.edu.vn
+final commit: 4e14427d869f79b3c70be54fe3e48cff698244d3
+
+Adding: Them tinh nang sap xep nhan vien theo thu tu va theo muc luong

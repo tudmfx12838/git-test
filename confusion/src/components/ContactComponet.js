@@ -78,8 +78,9 @@ class Contact extends Component {
         else if(this.state.touched.telnum && telnum.length > 11)
             errors.lastname = 'Tel. Number should be <= 10 numbers';
 
-       // const reg1 = /([a-zA-Z0-9]+)([\_\.\-{1}])?([a-zA-Z0-9]+)\@([a-zA-Z0-9]+)([\.])([a-zA-Z\.]+)/g;
-       if(this.state.touched.email && email.split('').filter(x => x === '@').length !== 1)
+       const reg1 = /([a-zA-Z0-9]+)([\_\.\-{1}])?([a-zA-Z0-9]+)\@([a-zA-Z0-9]+)([\.])([a-zA-Z\.]+)/g;
+    //    if(this.state.touched.email && email.split('').filter(x => x === '@').length !== 1)
+       if(this.state.touched.email && !reg1.test(email))
             errors.email = 'Email should contain a @';
 
         return errors;

@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable react/jsx-pascal-case */
 import React, { Component } from 'react';
 import { BreadcrumbItem, Breadcrumb, Button, Label, Col, Row } from 'reactstrap';
 import { Link } from 'react-router-dom';

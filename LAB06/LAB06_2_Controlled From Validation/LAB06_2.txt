@@ -1,0 +1,6 @@
+link git: https://github.com/tudmfx12838/git-test.git
+
+branch: React
+folder: confusion
+commit: 6431e1a1f61df01c3acb145d578a6b4d1aceec3f
+description: Controlled From Validation

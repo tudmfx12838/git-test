@@ -1,0 +1,6 @@
+link git: https://github.com/tudmfx12838/git-test.git
+
+branch: React
+folder: confusion
+commit: a90c62d0fae5229b7dfbaeaf76b08817ff34e80a
+description: React Redux Form Validation

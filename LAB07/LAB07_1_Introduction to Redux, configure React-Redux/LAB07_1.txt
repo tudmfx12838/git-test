@@ -1,0 +1,6 @@
+link git: https://github.com/tudmfx12838/git-test.git
+
+branch: React
+folder: confusion
+commit: ade30108c5cd0fd6b8d115b72461dc2aa8bec2f8
+description: Introduction to Redux, configure React-Redux

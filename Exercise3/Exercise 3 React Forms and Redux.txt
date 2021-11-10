@@ -1,0 +1,6 @@
+link git: https://github.com/tudmfx12838/git-test.git
+
+branch: React
+folder: confusion
+commit: 398fdc25d282ca6374294580a36964a067ae894f
+description: Exercise 3: React Forms and Redux

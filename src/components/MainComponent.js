@@ -33,7 +33,7 @@ class Main extends Component {
           <Header />
           <Switch>
             {/* Adding exact that mean when render more links with the same path of head Ex: /staff/1 /staff/2....*/}
-            <Route exact path="/staff" component={()=><StaffList staffs={this.state.staffs} />}/>
+            <Route exact path="/staff" component={()=><StaffList staffs={this.state.staffs} departments={this.state.departments} callback={()=>{}}/>}/>
             {/* In case not adding exact, Although render more links /staff/1 /staff/2...., It's alway to /staff*/}
             <Route path="/department" component={()=><Department departments={this.state.departments}/>}/>
             <Route path="/salary" component={()=><Salary staffs={this.state.staffs}/>}/>

@@ -20,8 +20,17 @@ class Main extends Component {
       SelectedSort: null
     }
   }
-  render(){
 
+  getNewStaff(newStaff){
+    // alert("invoked")
+    // alert(JSON.stringify(newStaff));
+
+    //Add newStaff to database, but if page reload, it'll be removed.
+    this.state.staffs.push(newStaff);
+    //STAFFS.push(newStaff);
+  }
+
+  render(){
     const StaffWithId = ({match}) => {
       return(
         <StaffDetail staff={this.state.staffs.filter((staff) => staff.id === parseInt(match.params.staffId,10))[0]}/>      
@@ -33,7 +42,7 @@ class Main extends Component {
           <Header />
           <Switch>
             {/* Adding exact that mean when render more links with the same path of head Ex: /staff/1 /staff/2....*/}
-            <Route exact path="/staff" component={()=><StaffList staffs={this.state.staffs} departments={this.state.departments} callback={()=>{}}/>}/>
+            <Route exact path="/staff" component={()=><StaffList staffs={this.state.staffs} departments={this.state.departments} addStaff={(value)=>this.getNewStaff(value)}/>}/>
             {/* In case not adding exact, Although render more links /staff/1 /staff/2...., It's alway to /staff*/}
             <Route path="/department" component={()=><Department departments={this.state.departments}/>}/>
             <Route path="/salary" component={()=><Salary staffs={this.state.staffs}/>}/>

@@ -29,7 +29,7 @@ class StaffList extends Component{
                 id: '',
                 name: '', 
                 doB: '',
-                salaryScale: 1,
+                salaryScale: 0,
                 startDate: '',
                 department: this.props.departments.find((department) => department.name == 'Sale'),
                 annualLeave: 0,
@@ -55,14 +55,22 @@ class StaffList extends Component{
         this.handleAddStaffChange = this.handleAddStaffChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleBlur = this.handleBlur.bind(this);
+        // this.handleClick = this.handleClick.bind(this);
     }
 
     handleSearch(event){
         //alert("value: " + this.search.value);
-        this.setState({
-            searchedKeyWord: this.search.value,
-            isSearching: true,  
-        });
+        if(this.search.value){
+            this.setState({
+                searchedKeyWord: this.search.value.toUpperCase(),
+                isSearching: true,  
+            });
+        }else{
+            this.setState({
+                searchedKeyWord: '',
+                isSearching: false,  
+            });
+        }
         event.preventDefault();
     }
 
@@ -82,7 +90,7 @@ class StaffList extends Component{
                 id: '',
                 name: '', 
                 doB: '',
-                salaryScale: 1,
+                salaryScale: 0,
                 startDate: '',
                 department: this.props.departments.find((department) => department.name == 'Sale'),
                 annualLeave: 0,
@@ -125,11 +133,42 @@ class StaffList extends Component{
     }
 
      
-    handleBlur = (field) => (evt) => {
+    handleBlur = (field) => (event) => {
         this.setState({
-            touched: { ...this.state.touched, [field]: true }
+            touched: { ...this.state.touched, [field]: true }, // keep all other key-value pairs and update the value of specific key
         });
+        
     }
+
+    // handleClick(event){
+    //     const target = event.target;
+    //     const name = target.name;
+    //     //alert(name);
+    //     this.setState({
+    //         newStaff: { ...this.state.newStaff, [name]: '1.0->3.0000' }
+    //     });
+    // }
+
+    // handleClick = (field) => (event) => {
+    //     const target = event.target;
+    //     const name = target.name;
+    //     var show;
+
+    //     if(name=='salaryScale'){
+    //         show = '1.0 -> 3.00000';
+    //     }else if(name=='annualLeave'||name=='overTime'){
+    //         show = '0.0';
+    //     }else if(name=='salary'){
+    //         show = '0usd'
+    //     }
+
+    //     //Dung field hay event cung dung duoc
+    //     //Muc dich hieu bai nen dung tron ca 2
+    //     this.setState({
+    //         newStaff: { ...this.state.newStaff, [field] : show}
+    //     });
+        
+    // }
 
     validate(name, doB, startDate, salaryScale, annualLeave, overTime, salary) {
         const errors = {
@@ -156,7 +195,7 @@ class StaffList extends Component{
             errors.startDate = 'Yêu cầu nhập';
 
         if (this.state.touched.salaryScale && salaryScale=='')
-            errors.salaryScale = 'Yêu cầu nhập';
+            errors.salaryScale = 'Yêu cầu nhập (1.0 -> 3.0)';
 
         if (this.state.touched.annualLeave && annualLeave=='')
             errors.annualLeave = 'Yêu cầu nhập';
@@ -168,12 +207,6 @@ class StaffList extends Component{
             errors.salary = 'Yêu cầu nhập';
 
         
-        
-        // if (this.state.touched.lastname && lastname.length < 3)
-        //     errors.lastname = 'Last Name should be >= 3 characters';
-        // else if (this.state.touched.lastname && lastname.length > 10)
-        //     errors.lastname = 'Last Name should be <= 10 characters';
-
         // const reg = /^\d+$/;
         // if (this.state.touched.telnum && !reg.test(telnum))
         //     errors.telnum = 'Tel. Number should contain only numbers';
@@ -189,24 +222,28 @@ class StaffList extends Component{
         const errors = this.validate(this.state.newStaff.name, this.state.newStaff.doB, this.state.newStaff.startDate, this.state.newStaff.salaryScale, 
             this.state.newStaff.annualLeave, this.state.newStaff.overTime, this.state.newStaff.salary);
 
-        const staff = this.props.staffs.map((staff) => {
-            if(this.state.isSearching){
-                //Logic Altholigm in here
-
-
-
-                //reder searching result in here
-                return(
-                    <div><h1>{this.state.searchedKeyWord}</h1></div>
-                );
-            }else{ 
+        var staff;
+        if(this.state.isSearching){
+            staff = this.props.staffs.map((staff) => {
+                const temp = staff.name.toUpperCase();
+                if(temp.endsWith(this.state.searchedKeyWord)){
+                    return(
+                        <div key={staff.id} className="col-6 col-md-4 col-lg-2 my-1">
+                            <RenderStaff staff={staff}/>
+                        </div>
+                    );
+                }
+            });
+        }else{
+            staff = this.props.staffs.map((staff) => {
                 return(
                     <div key={staff.id} className="col-6 col-md-4 col-lg-2 my-1">
                         <RenderStaff staff={staff}/>
                     </div>
                 );
-            }
-        });
+            });
+        }
+        
 
         return(
             <div className="container">
@@ -309,7 +346,13 @@ class StaffList extends Component{
                                         // placeholder="1"
                                         value={this.state.newStaff.salaryScale}
                                         onChange={this.handleAddStaffChange} 
+                                        valid={errors.salaryScale === ''}
+                                        invalid={errors.salaryScale !== ''}
+                                        onBlur={this.handleBlur('salaryScale')}
+                                        // onClick={this.handleClick}
+                                        // mouseDown={this.handleClick('salaryScale')}
                                         />
+                                    <FormFeedback>{errors.salaryScale}</FormFeedback> 
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
@@ -319,7 +362,11 @@ class StaffList extends Component{
                                         // placeholder="0"
                                         value={this.state.newStaff.annualLeave}
                                         onChange={this.handleAddStaffChange} 
+                                        valid={errors.annualLeave === ''}
+                                        invalid={errors.annualLeave !== ''}
+                                        onBlur={this.handleBlur('annualLeave')}
                                         />
+                                    <FormFeedback>{errors.annualLeave}</FormFeedback> 
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
@@ -329,7 +376,11 @@ class StaffList extends Component{
                                         // placeholder="0"
                                         value={this.state.newStaff.overTime}
                                         onChange={this.handleAddStaffChange} 
+                                        valid={errors.overTime === ''}
+                                        invalid={errors.overTime !== ''}
+                                        onBlur={this.handleBlur('overTime')}
                                         />
+                                    <FormFeedback>{errors.overTime}</FormFeedback> 
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
@@ -339,7 +390,11 @@ class StaffList extends Component{
                                         placeholder="0"
                                         value={this.state.newStaff.salary}
                                         onChange={this.handleAddStaffChange} 
+                                        valid={errors.salary === ''}
+                                        invalid={errors.salary !== ''}
+                                        onBlur={this.handleBlur('salary')}
                                         />
+                                    <FormFeedback>{errors.salary}</FormFeedback> 
                                 </Col>
                             </FormGroup>
                             <FormGroup row>               

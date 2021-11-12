@@ -350,7 +350,7 @@ class StaffList extends Component{
                             <FormGroup row>
                                 <Label htmlFor="salaryScale" md={5}>Hệ số lương</Label>
                                 <Col md={7}>
-                                    <Input type="salaryScale" id="salaryScale" name="salaryScale"
+                                    <Input type="text" id="salaryScale" name="salaryScale"
                                         // placeholder="1"
                                         value={this.state.newStaff.salaryScale}
                                         onChange={this.handleAddStaffChange} 
@@ -366,7 +366,7 @@ class StaffList extends Component{
                             <FormGroup row>
                                 <Label htmlFor="annualLeave" md={5}>Số ngày nghỉ còn lại</Label>
                                 <Col md={7}>
-                                    <Input type="annualLeave" id="annualLeave" name="annualLeave"
+                                    <Input type="text" id="annualLeave" name="annualLeave"
                                         // placeholder="0"
                                         value={this.state.newStaff.annualLeave}
                                         onChange={this.handleAddStaffChange} 
@@ -380,7 +380,7 @@ class StaffList extends Component{
                             <FormGroup row>
                                 <Label htmlFor="overTime" md={5}>Số ngày đã làm thêm</Label>
                                 <Col md={7}>
-                                    <Input type="overTime" id="overTime" name="overTime"
+                                    <Input type="text" id="overTime" name="overTime"
                                         // placeholder="0"
                                         value={this.state.newStaff.overTime}
                                         onChange={this.handleAddStaffChange} 
@@ -394,7 +394,7 @@ class StaffList extends Component{
                             <FormGroup row>
                                 <Label htmlFor="salary" md={5}>Lương cơ bản</Label>
                                 <Col md={7}>
-                                    <Input type="salary" id="salary" name="salary"
+                                    <Input type="text" id="salary" name="salary"
                                         placeholder="0"
                                         value={this.state.newStaff.salary}
                                         onChange={this.handleAddStaffChange} 

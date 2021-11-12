@@ -226,7 +226,15 @@ class StaffList extends Component{
         if(this.state.isSearching){
             staff = this.props.staffs.map((staff) => {
                 const temp = staff.name.toUpperCase();
+                //Kiem tra co giong ten
                 if(temp.endsWith(this.state.searchedKeyWord)){
+                    return(
+                        <div key={staff.id} className="col-6 col-md-4 col-lg-2 my-1">
+                            <RenderStaff staff={staff}/>
+                        </div>
+                    );
+                }//Kiem tra co giong ho
+                else if(temp.startsWith(this.state.searchedKeyWord)){
                     return(
                         <div key={staff.id} className="col-6 col-md-4 col-lg-2 my-1">
                             <RenderStaff staff={staff}/>

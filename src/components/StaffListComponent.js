@@ -8,6 +8,8 @@ import { Control, LocalForm, Errors } from 'react-redux-form';
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
 const minLength = (len) => (val) => val && (val.length >= len);
+const minVar= (len) => (val) => val && (val >= len);
+const maxVar = (len) => (val) => val && (val <= len);
 const isNumber = (val) => !isNaN(Number(val));
 
 function RenderStaff({staff}){
@@ -45,7 +47,7 @@ const [isModalOpen, setisModalOpen] = useState(false);
 var search;
 
 function handleSearch(event){
-    alert("value: " + search.value);
+    // alert("value: " + search.value);
     if(search.value){
         setisSearching(true);
         setsearchedKeyWord(search.value.toUpperCase());
@@ -64,12 +66,21 @@ function toggleModal(event){
 }
 
 function handleSubmit(value){
-    console.log("Current State is: " + JSON.stringify(value));
-    alert("Current State is: " + JSON.stringify(value));
+    setisSearching(false);
+    setsearchedKeyWord('');
+    //console.log("Current State is: " + JSON.stringify(value));
     setisModalOpen(!isModalOpen);
-        
+    const newstaff = Object.assign({},value, {'image': '/assets/images/alberto.png'});
+
+    const department = props.departments.find((department) => department.name == newstaff.department);
+    newstaff.department = department;
+    newstaff.id = props.staffs.length;
+
+    
+    // alert("Current State is: " + JSON.stringify(newstaff));
+
     //callback to return to Main Component
-    //this.props.addStaff(this.state.newStaff);
+    props.addStaff(newstaff);
     // event.preventDefault();
 }
 
@@ -139,7 +150,7 @@ function handleSubmit(value){
             <Modal isOpen={isModalOpen} toggle={toggleModal}>
             <ModalHeader toggle={toggleModal}>Thêm nhân viên</ModalHeader>
             <ModalBody>
-                <div className="col-12 col-md-12 col-lg-9">
+                <div className="col-12 col-md-12 col-lg-12">
                     <LocalForm onSubmit={(value) => {handleSubmit(value)}}>
                         <Row className = "form-group">
                             <Label htmlFor="name" md={5}>Tên</Label>
@@ -227,7 +238,7 @@ function handleSubmit(value){
                                     defaultValue="1.0"
                                     className="form-control"
                                     validators={{
-                                        required, isNumber
+                                        required, isNumber, minVar: minVar(1.0), maxVar: maxVar(3.0)
                                     }}
                                 />
                                 <Errors
@@ -235,8 +246,10 @@ function handleSubmit(value){
                                     model=".salaryScale"
                                     show="touched"
                                     messages={{
-                                        required: 'Yêu cầu nhập',
-                                        isNumber: "Yêu cầu nhập số từ 1.0 -> 3.0"
+                                        required: 'Yêu cầu nhập ',
+                                        isNumber: "Yêu cầu nhập số ",
+                                        minVar: "Yêu cầu nhập số từ 1.0 -> 3.0 ",
+                                        maxVar: "Yêu cầu nhập số từ 1.0 -> 3.0 "
                                     }}
                                 />
                             </Col>

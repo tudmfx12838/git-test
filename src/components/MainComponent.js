@@ -29,7 +29,6 @@ class Main extends Component {
   getNewStaff(newStaff){
     // alert("invoked")
     // alert(JSON.stringify(newStaff));
-
     //Add newStaff to database, but if page reload, it'll be removed.
     this.props.staffs.push(newStaff);
     //STAFFS.push(newStaff);
@@ -52,7 +51,6 @@ class Main extends Component {
             <Route path="/department" component={()=><Department departments={this.props.departments}/>}/>
             <Route path="/salary" component={()=><Salary staffs={this.props.staffs}/>}/>
             <Route path="/staff/:staffId" component={StaffWithId}/>
-
 
             {/* <Route exact path="/contactus" component={() => <Contact/>}/> */}
             <Route exact path="/contactus" component={Contact}/>

@@ -80,6 +80,10 @@ class StaffList extends Component{
         });
     }
     handleSubmit(event){
+        this.setState({
+            searchedKeyWord: '',
+            isSearching: false,  
+        });
         // alert(this.props.staffs.length);
         // alert(JSON.stringify(this.state.newStaff));
         
@@ -289,7 +293,7 @@ class StaffList extends Component{
                 <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
                 <ModalHeader toggle={this.toggleModal}>Thêm nhân viên</ModalHeader>
                 <ModalBody>
-                    <div className="col-12 col-md-12 col-lg-9">
+                    <div className="col-12 col-md-12 col-lg-12">
                         <Form onSubmit={this.handleSubmit}>
                             <FormGroup row>
                                 <Label htmlFor="name" md={5}>Tên</Label>

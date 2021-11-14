@@ -1,0 +1,16 @@
+Author: Dang Minh Tu
+ID: FX12838
+email: tudmfx12838@funix.edu.vn
+
+Project:  Assessment 3
+link git: https://github.com/tudmfx12838/git-test.git
+
+
+Simple Part: Search Feature by using Uncontrolled Form, Add new Staff by using Controlled Form
+branch: RJS101x_Assignment3_tudmFX12838@funix.edu.vn
+final commit: 54ba4eba575909593eb0758948a9846538582618
+
+
+Advanced Part: Configure React-Redux, Add new Staff by using Form Control
+branch: RJS101x_Assignment3_tudmFX12838@funix.edu.vn_advanced_part
+final commit: 8629b85d7974da0a4bf25c4c5e4b9bc2b37a3d33

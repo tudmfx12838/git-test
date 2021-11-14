@@ -29,6 +29,9 @@ class CommentForm extends Component{
     handleSubmit(value){
         console.log("Current State is: " + JSON.stringify(value));
         alert("Current State is: " + JSON.stringify(value));
+        
+        //
+        // this.props.addComment(this.props.dishId, value.rating, value.author, value.comment);
 
         this.setState({
             isModalOpen: !this.state.isModalOpen //false to close Modal
@@ -157,7 +160,8 @@ const DishDetail = (props) => {
                             {comment}
                         </Card>
                         <br/>
-                        <CommentForm />
+                        <CommentForm/>
+                        {/* <CommentForm addComment={props.addComment} dishId={props.dish.id}/> */}
                     </div>
                 </div>
             </div>

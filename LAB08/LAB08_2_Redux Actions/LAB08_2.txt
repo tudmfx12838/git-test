@@ -1,0 +1,6 @@
+link git: https://github.com/tudmfx12838/git-test.git
+
+branch: React
+folder: confusion
+commit: 8bc265e3bfc1c1ab187a9ae58dc463e928fc16e8
+description: Redux Actions

@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle, BreadcrumbItem, Breadcrumb, Modal, ModalHeader, ModalBody, Label, Col, Row, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { Control, LocalForm, Errors } from 'react-redux-form';
+// import dateFormat from 'dateformat';
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -27,11 +28,10 @@ class CommentForm extends Component{
         });
     }
     handleSubmit(value){
-        console.log("Current State is: " + JSON.stringify(value));
-        alert("Current State is: " + JSON.stringify(value));
-        
-        //
-        // this.props.addComment(this.props.dishId, value.rating, value.author, value.comment);
+        // console.log("Current State is: " + JSON.stringify(value));
+        // alert("Current State is: " + JSON.stringify(value));
+
+        this.props.addComment(this.props.dishId, value.rating, value.author, value.comment);
 
         this.setState({
             isModalOpen: !this.state.isModalOpen //false to close Modal
@@ -53,6 +53,7 @@ class CommentForm extends Component{
                                     <Label forHTML="rating">Rating</Label>
                                     <Control.select model=".rating" id="rating" name="rating"
                                         className="form-control"
+                                        defaultValue={1}
                                         >
                                         <option>1</option>
                                         <option>2</option>
@@ -62,8 +63,8 @@ class CommentForm extends Component{
                                     </Control.select>
                                 </Row>
                                 <Row className="form-group">
-                                    <Label forHTML="yourname">Rating</Label>
-                                    <Control.text model=".yourname" id="yourname" name="yourname"
+                                    <Label forHTML="author">Name</Label>
+                                    <Control.text model=".author" id="author" name="author"
                                         className="form-control"
                                         placeholder="Your name"
                                         validators={{
@@ -72,7 +73,7 @@ class CommentForm extends Component{
                                     />
                                     <Errors
                                             className="text-danger"
-                                            model=".yourname"
+                                            model=".author"
                                             show="touched"
                                             messages={{
                                                 required: 'Required',
@@ -82,7 +83,7 @@ class CommentForm extends Component{
                                     />
                                 </Row>
                                 <Row className="form-group">
-                                    <Label forHTML="comment">Rating</Label>
+                                    <Label forHTML="comment">Comment</Label>
                                     <Control.textarea model=".comment" id="comment" name="comment"
                                         className="form-control"
                                         rows="6"
@@ -117,24 +118,33 @@ function RenderDish({dish}) {
     );
 }
 
-function RenderComments({comments}) {
-    return(
-        <CardText>{comments.comment} <br></br>
-        --{comments.author},{new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comments.date)))}</CardText>
+function RenderComments({comments, addComment, dishId}) {
+    const comment = comments.map((comment)=>{
+        return(
+            <div key={comment.id}>
+                    <CardText>{comment.comment} <br></br>
+                        --{comment.author},{new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}
+                        {/* {dateFormat(comment.date, "dd/mm/yyyy")} */}
+                    </CardText>
+                <br></br>
+            </div>
+        );
+    });
+    return (
+        <React.Fragment>
+            <Card>
+                <CardTitle>Comments</CardTitle>
+            {comment}
+            </Card>
+            <br/>
+            <CommentForm dishId={dishId} addComment={addComment}/>
+        </React.Fragment>
     );
 };
 
 
 const DishDetail = (props) => {
     if(props.dish != null){
-        const comment = props.comments.map((commentElement)=>{
-            return(
-                <div key={commentElement.id}>
-                        <RenderComments comments={commentElement}/>
-                    <br></br>
-                </div>
-            );
-        });
 
         return(
             <div className="container">
@@ -155,13 +165,9 @@ const DishDetail = (props) => {
                         <RenderDish dish={props.dish}/>
                     </div>
                     <div className="col-12 col-md-5 m-1">
-                        <Card>
-                            <CardTitle>Comments</CardTitle>
-                            {comment}
-                        </Card>
-                        <br/>
-                        <CommentForm/>
-                        {/* <CommentForm addComment={props.addComment} dishId={props.dish.id}/> */}
+                        <RenderComments comments={props.comments}
+                                        addComment={props.addComment}
+                                        dishId={props.dish.id}/>
                     </div>
                 </div>
             </div>

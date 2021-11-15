@@ -12,9 +12,10 @@ import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 //
-import { addComment } from '../redux/ActionCreator';
+import { addComment, fetchDishes } from '../redux/ActionCreator';
 
 //get state and returd state as parameter
+//Anh xa thanh props
 const mapStateToProps = state => {
   return{
     dishes: state.dishes,
@@ -23,22 +24,39 @@ const mapStateToProps = state => {
     leaders: state.leaders
   }
 }
-
+//Anh xa thanh props
 const mapDispatchToProps = (dispatch) => ({
-  addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment))
+  addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment)),
+  fetchDishes: ()=>{dispatch(fetchDishes())}
 });
 
 class Main extends Component {
   
   constructor(props){
     super(props);
-
+  }
+//ActionCreator.js
+//   export const fetchDishes = () => (dispatch) => {
+//     //Thunk se lam 2 viec
+//     //1. Ktra dishes lam gi trong thoi ngan
+//     dispatch(dishesLoading(true));
+//     //2. sau do 2s se day dishes vao state cua store
+//     setTimeout(()=>{
+//         dispatch(addDishes(DISHES));
+//     }, 2000);
+// }
+//su dung React life cycle khi mount xong thi goi fetchDishes
+  componentDidMount() {
+    this.props.fetchDishes();
   }
 
   render(){
     const HomePage = () => {
       return(
-        <Home dish={this.props.dishes.filter((dish) => dish.featured)[0]}
+        <Home dish={this.props.dishes.dishes.filter((dish) => dish.featured)[0]}
+        dishesLoading={this.props.dishes.isLoading}
+        dishesErrMess={this.props.dishes.errMess}
+
         promotion={this.props.promotions.filter((promo) => promo.featured)[0]}
         leader={this.props.leaders.filter((leader) => leader.featured)[0]}
         />
@@ -48,10 +66,13 @@ class Main extends Component {
     // match is react-router's default param
     const DishWithId = ({match}) => {
       return(
-        <DishDetail dish={this.props.dishes.filter((dish) => dish.id === parseInt(match.params.dishId,10))[0]} 
+        <DishDetail dish={this.props.dishes.dishes.filter((dish) => dish.id === parseInt(match.params.dishId,10))[0]} 
+        dishesLoading={this.props.dishes.isLoading}
+        dishesErrMess={this.props.dishes.errMess}
+
         comments={this.props.comments.filter((comment) => comment.dishId === parseInt(match.params.dishId,10))}
         
-        //
+        //Them comment
         addComment={this.props.addComment}
         />
       );

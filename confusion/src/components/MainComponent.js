@@ -11,8 +11,11 @@ import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 //withRouter cau hinh ket noi React component voi Redux
 import { connect } from 'react-redux';
 
-//
+//Import Action from ActionCreator.js
 import { addComment, fetchDishes } from '../redux/ActionCreator';
+
+//
+import { actions } from 'react-redux-form';
 
 //get state and returd state as parameter
 //Anh xa thanh props
@@ -27,7 +30,10 @@ const mapStateToProps = state => {
 //Anh xa thanh props
 const mapDispatchToProps = (dispatch) => ({
   addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment)),
-  fetchDishes: ()=>{dispatch(fetchDishes())}
+  fetchDishes: ()=>{dispatch(fetchDishes())},
+
+  //actions.reset('feedback') nhung form co label la 'feedback' se bi reset
+  resetFeedbackForm: () => {dispatch(actions.reset('feedback'))}
 });
 
 class Main extends Component {
@@ -87,7 +93,7 @@ class Main extends Component {
             <Route exact path="/menu" component={() => <Menu dishes={this.props.dishes}/>} />
             <Route path="/menu/:dishId" component={DishWithId}/>
             {/* <Route exact path="/contactus" component={() => <Contact/>}/> */}
-            <Route exact path="/contactus" component={Contact}/>
+            <Route exact path="/contactus" component={() => <Contact resetFeedbackForm={this.props.resetFeedbackForm}/>}/>
             <Redirect to="/home" />{/* if not map above, it's alway to redirect */}
           </Switch>
           <Footer />

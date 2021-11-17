@@ -28,10 +28,26 @@ export const fetchDishes = () => (dispatch) => {
 
     //Giao tiep giu lieu voi sever su thong qua Fetch
     return fetch(baseUrl + 'dishes')
+        .then(response => {
+            //response.ok tra ve true khi may chu phan hoi ok
+            if(response.ok){
+                return response;
+            }else{
+                var error = new Error('Error' + response.status + ': ' + response.statusText);
+                error.response = response;
+                throw error;
+            }
+        },
+        error => {
+                var errmess = new Error(error.message);
+                throw errmess;
+        })
+        
         .then(response => response.json())
         .then(dishes => dispatch(addDishes(dishes)))
-}
+        .catch(error => dispatch(dishesFailed(error.message)));
 
+}
 
 export const dishesLoading = (bol) => ({
     type: ActionTypes.DISHES_LOADING,
@@ -50,10 +66,25 @@ export const addDishes = (dishes) => ({
 
 export const fetchComments = () => (dispatch) => {
 
-    //Giao tiep giu lieu voi sever su thong qua Fetch
-    return fetch(baseUrl + 'comments')
+        //Giao tiep giu lieu voi sever su thong qua Fetch
+        return fetch(baseUrl + 'comments')
+        .then(response => {
+            //response.ok tra ve true khi may chu phan hoi ok
+            if(response.ok){
+                return response;
+            }else{
+                var error = new Error('Error' + response.status + ': ' + response.statusText);
+                error.response = response;
+                throw error;
+            }
+        },
+        error => {
+                var errmess = new Error(error.message);
+                throw errmess;
+        })
         .then(response => response.json())
         .then(comments => dispatch(addComments(comments)))
+        .catch(error => dispatch(commentsFailed(error.message)));
 }
 
 export const commentsFailed = (errmess) => ({
@@ -73,8 +104,23 @@ export const fetchPromos = () => (dispatch) => {
 
     //Giao tiep giu lieu voi sever su thong qua Fetch
     return fetch(baseUrl + 'promotions')
+        .then(response => {
+            //response.ok tra ve true khi may chu phan hoi ok
+            if(response.ok){
+                return response;
+            }else{
+                var error = new Error('Error' + response.status + ': ' + response.statusText);
+                error.response = response;
+                throw error;
+            }
+        },
+        error => {
+                var errmess = new Error(error.message);
+                throw errmess;
+        })
         .then(response => response.json())
         .then(promotions => dispatch(addPromos(promotions)))
+        .catch(error => dispatch(promosFailed(error.message)));
 }
 
 export const promosLoading = (bol) => ({

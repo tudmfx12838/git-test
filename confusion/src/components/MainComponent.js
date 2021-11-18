@@ -12,7 +12,7 @@ import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 //Import Action from ActionCreator.js
-import { addComment, fetchDishes, fetchComments, fetchPromos } from '../redux/ActionCreator';
+import { postComment, fetchDishes, fetchComments, fetchPromos } from '../redux/ActionCreator';
 
 //
 import { actions } from 'react-redux-form';
@@ -29,7 +29,7 @@ const mapStateToProps = state => {
 }
 //Anh xa thanh props
 const mapDispatchToProps = (dispatch) => ({
-  addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment)),
+  postComment: (dishId, rating, author, comment) => dispatch(postComment(dishId, rating, author, comment)),
   fetchDishes: ()=>{dispatch(fetchDishes())},
   //
   fetchComments: ()=>{dispatch(fetchComments())},
@@ -88,7 +88,7 @@ class Main extends Component {
         commentsErrMess={this.props.comments.errMess}
 
         //Them comment
-        addComment={this.props.addComment}
+        postComment={this.props.postComment}
         />
       );
     }

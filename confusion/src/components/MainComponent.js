@@ -17,6 +17,9 @@ import { postComment, fetchDishes, fetchComments, fetchPromos } from '../redux/A
 //
 import { actions } from 'react-redux-form';
 
+//
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
+
 //get state and returd state as parameter
 //Anh xa thanh props
 const mapStateToProps = state => {
@@ -96,15 +99,19 @@ class Main extends Component {
     return (
       <React.Fragment>
           <Header />
-          <Switch>
-            <Route path="/home" component={HomePage} />
-            <Route path="/aboutus" component={() => <About leaders={this.props.leaders}/>} />
-            <Route exact path="/menu" component={() => <Menu dishes={this.props.dishes}/>} />
-            <Route path="/menu/:dishId" component={DishWithId}/>
-            {/* <Route exact path="/contactus" component={() => <Contact/>}/> */}
-            <Route exact path="/contactus" component={() => <Contact resetFeedbackForm={this.props.resetFeedbackForm}/>}/>
-            <Redirect to="/home" />{/* if not map above, it's alway to redirect */}
-          </Switch>
+          <TransitionGroup>
+            <CSSTransition key={this.props.location.key} classNames="page" timeout={300}>
+              <Switch>
+                <Route path="/home" component={HomePage} />
+                <Route path="/aboutus" component={() => <About leaders={this.props.leaders}/>} />
+                <Route exact path="/menu" component={() => <Menu dishes={this.props.dishes}/>} />
+                <Route path="/menu/:dishId" component={DishWithId}/>
+                {/* <Route exact path="/contactus" component={() => <Contact/>}/> */}
+                <Route exact path="/contactus" component={() => <Contact resetFeedbackForm={this.props.resetFeedbackForm}/>}/>
+                <Redirect to="/home" />{/* if not map above, it's alway to redirect */}
+              </Switch>
+            </CSSTransition>
+          </TransitionGroup>
           <Footer />
       </React.Fragment>
     );

@@ -1,0 +1,6 @@
+link git: https://github.com/tudmfx12838/git-test.git
+
+branch: React
+folder: confusion
+commit: 5247e6fe599ea659f0fdf3c489723a807f50a3cb
+description: Fetch Handling Errors

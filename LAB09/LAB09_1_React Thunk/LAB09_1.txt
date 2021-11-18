@@ -1,0 +1,6 @@
+link git: https://github.com/tudmfx12838/git-test.git
+
+branch: React
+folder: confusion
+commit: 394ad5a8a9523a52defcbdc194a1f836319ef039
+description: React Thunk

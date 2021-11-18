@@ -7,6 +7,8 @@ import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
 
+import { FadeTransform, Fade, Stagger } from 'react-animation-components'
+
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
 const minLength = (len) => (val) => val && (val.length >= len);
@@ -110,37 +112,47 @@ class CommentForm extends Component{
 
 function RenderDish({dish}) {
     return(
-        <Card>
-            <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name}/>
-            <CardBody>
-                <CardTitle>{dish.name}</CardTitle>
-                <CardText>{dish.description}</CardText>
-            </CardBody>
-        </Card>   
+        <FadeTransform in
+        transformProps={{
+            exitTransform: 'scale(0.5) translateY(-50%)'
+        }}>
+            <Card>
+                <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name}/>
+                <CardBody>
+                    <CardTitle>{dish.name}</CardTitle>
+                    <CardText>{dish.description}</CardText>
+                </CardBody>
+            </Card>
+        </FadeTransform>
     );
 }
 
 function RenderComments({comments, postComment, dishId}) {
     const comment = comments.map((comment)=>{
         return(
-            <div key={comment.id}>
-                    <CardText>{comment.comment} <br></br>
-                        --{comment.author},{new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}
-                        {/* {dateFormat(comment.date, "dd/mm/yyyy")} */}
-                    </CardText>
-                <br></br>
-            </div>
+            <Stagger in>
+                    <div key={comment.id}>
+                        <Fade in>
+                                <CardText>{comment.comment} <br></br>
+                                    --{comment.author},{new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}
+                                    {/* {dateFormat(comment.date, "dd/mm/yyyy")} */}
+                                </CardText>
+                            <br></br>
+                        </Fade>
+                    </div>
+            </Stagger>
         );
     });
     return (
         <React.Fragment>
             <Card>
-                <CardTitle>Comments</CardTitle>
-            {comment}
+                <CardTitle>Comments</CardTitle>           
+                    {comment}
             </Card>
             <br/>
             <CommentForm dishId={dishId} postComment={postComment}/>
         </React.Fragment>
+     
     );
 };
 

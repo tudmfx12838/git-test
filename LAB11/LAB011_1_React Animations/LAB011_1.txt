@@ -1,0 +1,6 @@
+link git: https://github.com/tudmfx12838/git-test.git
+
+branch: React
+folder: confusion
+commit: cd95a8fadb4f0541f2d32f60703a32f7d85cb198
+description: React Animations

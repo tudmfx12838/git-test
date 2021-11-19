@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-constructor */
 import React, {Component} from 'react';
 import Home from './HomeComponent';
 import About from './AboutComponent';

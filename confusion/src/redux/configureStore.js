@@ -8,6 +8,8 @@ import { Comments } from "./comments";
 import { Promotions } from "./promotins";
 import { Leaders } from "./leaders";
 
+import { Feedbacks } from "./feedbacks";
+
 //import applyMiddleware, thunk, logger
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
@@ -24,7 +26,9 @@ export const ConfigureStore = () => {
             leaders: Leaders,
             ...createForms({
                 feedback: InitialFeedback
-            })
+            }),
+
+            feedbacks: Feedbacks
         }),
         applyMiddleware(thunk, logger)
     );

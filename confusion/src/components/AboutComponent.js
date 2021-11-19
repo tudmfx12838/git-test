@@ -1,21 +1,33 @@
 import React from 'react';
 import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { baseUrl } from '../shared/baseUrl';
 
-function RenderLeader({leader}){
-    return(
-        <Media className="mb-3">
-            <Media left>
-                <Media object src={leader.image} className="align-self-start mr-5" alt={leader.name}/>
-            </Media>
-            <Media body className="text-justify">
-                <Media heading>{leader.name}</Media>
-                <p>{leader.designation}</p><br/>
-                <p>{leader.description}</p>
-            </Media>
-        </Media>
-    );
-}
+import { Fade, Stagger } from 'react-animation-components'
+
+// function RenderLeader({leader}){
+//     return(
+//         <Media className="mb-3">
+//             <Media left>
+//                 <Media object src={leader.image} className="align-self-start mr-5" alt={leader.name}/>
+//             </Media>
+//             <Media body className="text-justify">
+//                 <Media heading>{leader.name}</Media>
+//                 <p>{leader.designation}</p><br/>
+//                 <p>{leader.description}</p>
+//             </Media>
+//         </Media>
+//     );
+// }
+
+    // const leaders = props.leaders.map((leader) => {
+    //     return (
+    //         <div key={leader.id}>
+    //             <RenderLeader leader={leader}/>
+    //         </div>
+    //     );
+    // });
+
 
 // render() {
 //     const menu = this.state.dishes.map((dish) => {
@@ -45,15 +57,32 @@ function RenderLeader({leader}){
 //     );
 // }
 
-function About(props) {
-
-    const leaders = props.leaders.map((leader) => {
-        return (
-            <div key={leader.id}>
-                <RenderLeader leader={leader}/>
-            </div>
+function RenderLeader({leaders}){
+    const leaders1 = leaders.map((leader) => {
+        return(
+            <Stagger in>
+                 <Fade in>
+                    <div key={leader.id}>
+                        <Media className="mb-3">
+                            <Media left>
+                                <Media object src={baseUrl + leader.image} className="align-self-start mr-5" alt={leader.name}/>
+                            </Media>
+                            <Media body className="text-justify">
+                                <Media heading>{leader.name}</Media>
+                                <p>{leader.designation}</p><br/>
+                                <p>{leader.description}</p>
+                            </Media>
+                        </Media>
+                    </div>
+                </Fade>
+            </Stagger>
         );
     });
+
+    return leaders1;
+}
+
+function About(props) {
 
     return(
         <div className="container">
@@ -111,7 +140,7 @@ function About(props) {
                 </div>
                 <div className="col-12">
                     <Media list>
-                        {leaders}
+                        <RenderLeader leaders={props.leaders}/>
                     </Media>
                 </div>
             </div>

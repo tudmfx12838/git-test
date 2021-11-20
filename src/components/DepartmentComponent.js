@@ -4,19 +4,29 @@ import Select from 'react-select';
 import { Card, CardText, CardBody, CardTitle, CardImg, Breadcrumb, BreadcrumbItem, CardBlock } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { Loading } from './LoadingComponent';
-
+import { FadeTransform } from 'react-animation-components';
 
 function RenderDepartment({departments}){
     const department = departments.map((department) => {
         return(
-            <div key={department.id} className="col-12 col-md-6 col-lg-4 my-1">
-                <div className="border p-3 bg-warning">
-                    <Link to={`/department/${department.id}`}>
-                        <h2>{department.name}</h2>
-                        <p  className="text-center">Số lượng nhân viên: {department.numberOfStaff}</p>
-                    </Link>
+
+                <div key={department.id} className="col-12 col-md-6 col-lg-4 my-1">
+                    <FadeTransform
+                    in
+                    transformProps={{
+                        exitTransform: 'scale(0.5) translateY(-50%)'
+                    }}>
+
+                        <div className="border p-3 bg-warning">
+                            <Link to={`/department/${department.id}`}>
+                                <h2>{department.name}</h2>
+                                <p  className="text-center">Số lượng nhân viên: {department.numberOfStaff}</p>
+                            </Link>
+                        </div>
+                        
+                    </FadeTransform>
                 </div>
-            </div>
+            
         );
     });
 

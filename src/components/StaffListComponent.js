@@ -176,7 +176,7 @@ function handleSubmit(value){
                     return(
                         <div key={staff.id} className="col-6 col-md-4 col-lg-2 my-1">
                             <Input type="checkbox" id={staff.id} name={staff.id} 
-                                innerRef={(check) => select[select.length] = (check)} onChange={getSelectedStaff}/>
+                                innerRef={(check) => select[select.length] = (check)}/>
                             <RenderStaff staff={staff}/>
                         </div>
                     );
@@ -188,7 +188,7 @@ function handleSubmit(value){
                     return(
                         <div key={staff.id} className="col-6 col-md-4 col-lg-2 my-1">
                             <Input type="checkbox" id={staff.id} name={staff.id} 
-                                innerRef={(check) => select[select.length] = (check)} onChange={getSelectedStaff}/>
+                                innerRef={(check) => select[select.length] = (check)}/>
                             <RenderStaff staff={staff}/>
                         </div>
                     );

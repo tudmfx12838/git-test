@@ -39,6 +39,8 @@ const [selectOrDelete, setselectOrDelete] = useState({type: 'Chọn', color:'pri
 const [isEditing, setisEditing] = useState(false);
 const [selectOrEdit, setselectOrEdit] = useState({type: 'Sửa', color:'primary'});
 
+const [addOrEditStaff, setaddOrEditStaff] = useState({type: 'Thêm Nhân Viên', value: false});
+
 // const [newStaffs, setNewStaffs] = useState([]);
 
 var search;
@@ -68,7 +70,9 @@ var select = [];
 function handleEdit(event){
     setisEditing(!isEditing);
     if(isEditing){
+        setaddOrEditStaff({type: 'Cập nhật thông tin Nhân Viên: ' + select.find((select)=>select.checked === true).name, value: true});
         setselectOrEdit({type: 'Sửa', color:'primary'});
+        setisModalOpen(!isModalOpen);
     }
     else{
         setselectOrEdit({type: 'Cập Nhật', color:'success'});
@@ -122,16 +126,25 @@ function toggleModal(event){
 
 function handleSubmit(value){
     setisSearching(false);
+    setisSelecting(false);
+    setisEditing(false);
     setsearchedKeyWord('');
     //console.log("Current State is: " + JSON.stringify(value));
     setisModalOpen(!isModalOpen);
 
+    if(addOrEditStaff.value){//UpdateStaff Feature
 
-    // postStaff: (name, doB, salaryScale, startDate, departmentId, annualLeave, overTime, image, salary)
-    const department = props.departments.find((department) => department.name == value.department);
-    const image = '/asset/images/alberto.png';
-    props.postStaff(value.name, value.doB, value.salaryScale, value.startDate, department.id,
-                         value.annualLeave, value.overTime, image ,value.salary);
+    }else{
+        //AddStaff Feature
+        // postStaff: (name, doB, salaryScale, startDate, departmentId, annualLeave, overTime, image, salary)
+        const department = props.departments.find((department) => department.name == value.department);
+        const image = '/asset/images/alberto.png';
+        props.postStaff(value.name, value.doB, value.salaryScale, value.startDate, department.id,
+                            value.annualLeave, value.overTime, image ,value.salary);
+    }
+
+
+
     // fetchNewData()                     
     
 }
@@ -259,7 +272,7 @@ function handleSubmit(value){
             </div>
             
             <Modal isOpen={isModalOpen} toggle={toggleModal}>
-            <ModalHeader toggle={toggleModal}>Thêm nhân viên</ModalHeader>
+            <ModalHeader toggle={toggleModal}>{addOrEditStaff.type}</ModalHeader>
             <ModalBody>
                 <div className="col-12 col-md-12 col-lg-12">
                     <LocalForm onSubmit={(value) => {handleSubmit(value)}}>

@@ -5,7 +5,8 @@ import { Card, CardText, CardBody, CardTitle, CardImg, Breadcrumb, BreadcrumbIte
 import { Link } from 'react-router-dom';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Loading } from './LoadingComponent';
-import { baseUrl } from '../shared/baseUrl';
+
+import { FadeTransform } from 'react-animation-components';
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -16,12 +17,18 @@ const isNumber = (val) => !isNaN(Number(val));
 
 function RenderStaff({staff}){
     return(
-        <Card className="bg-warning">
-            <Link to={`/staff/${staff.id}`}>
-                <CardImg src={staff.image} alt={staff.name} className="mr-5"/>
-                <CardText className="text-center"><b>{staff.name}</b></CardText>
-            </Link>
-        </Card>
+        <FadeTransform
+        in
+        transformProps={{
+            exitTransform: 'scale(0.5) translateY(-50%)'
+        }}>
+            <Card className="bg-warning">
+                <Link to={`/staff/${staff.id}`}>
+                    <CardImg src={staff.image} alt={staff.name} className="mr-5"/>
+                    <CardText className="text-center"><b>{staff.name}</b></CardText>
+                </Link>
+            </Card>
+        </FadeTransform>
     );
 } 
 
@@ -34,31 +41,31 @@ const [searchedKeyWord, setsearchedKeyWord] = useState('');
 const [isModalOpen, setisModalOpen] = useState(false);
 const [isSelecting, setisSelecting] = useState(false);
 const [selectOrDelete, setselectOrDelete] = useState({type: 'Chọn', color:'primary'});
-const [newStaffs, setNewStaffs] = useState([]);
+// const [newStaffs, setNewStaffs] = useState([]);
 
 var search;
 var select = [];
 // var selectOrDeleteButton = 'Chọn';
 
-const fetchNewData = ()=>{
-    return fetch(baseUrl + 'staffs')
-        .then(respone => {
-            if(respone.ok){
-                return respone;
-            }else{
-                var error = new Error('Error' + respone.status + ' : ' + respone.statusText);
-                error.respone = respone;
-                throw error;
-            }
-        },
-        error => {
-            var errmess = new Error(error.message);
-            throw errmess;
-        })
+// const fetchNewData = ()=>{
+//     return fetch(baseUrl + 'staffs')
+//         .then(respone => {
+//             if(respone.ok){
+//                 return respone;
+//             }else{
+//                 var error = new Error('Error' + respone.status + ' : ' + respone.statusText);
+//                 error.respone = respone;
+//                 throw error;
+//             }
+//         },
+//         error => {
+//             var errmess = new Error(error.message);
+//             throw errmess;
+//         })
         
-        .then(respone => respone.json())
-        .then(staffs => setNewStaffs(staffs))
-}
+//         .then(respone => respone.json())
+//         .then(staffs => setNewStaffs(staffs))
+// }
 
 function handleSelect(event){
     setisSelecting(!isSelecting);
@@ -116,13 +123,13 @@ function handleSubmit(value){
     const image = '/asset/images/alberto.png';
     props.postStaff(value.name, value.doB, value.salaryScale, value.startDate, department.id,
                          value.annualLeave, value.overTime, image ,value.salary);
-    fetchNewData()                     
+    // fetchNewData()                     
     
 }
 
-useEffect(() => {
-  fetchNewData()
-}, [])
+// useEffect(() => {
+//   fetchNewData()
+// }, [])
 
 
         var staff;
@@ -135,7 +142,7 @@ useEffect(() => {
             if(isSearching){
                 // staff = newStaffs&&newStaffs
                 // staff = props.staffs.map((staff) =>
-                staff = newStaffs.map((staff) =>
+                staff = props.staffs.map((staff) =>
                  {
                     const temp = staff.name.toUpperCase();
                     //Kiem tra co giong ten
@@ -155,7 +162,7 @@ useEffect(() => {
                     }
                 });
             }else if(isSelecting){
-                staff = newStaffs.map((staff)=> {
+                staff = props.staffs.map((staff)=> {
                     return(
                         <div key={staff.id} className="col-6 col-md-4 col-lg-2 my-1">
                             <Input type="checkbox" id={staff.id} name={staff.id} 
@@ -167,7 +174,7 @@ useEffect(() => {
             }else{ 
                 // staff = newStaffs&&newStaffs
                 //staff = props.staffs.map((staff)
-                staff = newStaffs.map((staff)=> {
+                staff = props.staffs.map((staff)=> {
                     return(
                         <div key={staff.id} className="col-6 col-md-4 col-lg-2 my-1">
                             <RenderStaff staff={staff}/>

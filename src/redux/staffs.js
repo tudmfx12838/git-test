@@ -17,12 +17,12 @@ export const Staffs = (state ={
 
         case ActionTypes.ADD_STAFF:
             var staff = action.payload;
+            //fetch tra ve toan bo db, vi the can cat di phan khong can thiet, 2h sang moi xong @@
+            staff.splice(0,state.staffs.length);
             return {...state, staffs: state.staffs.concat(staff)};
 
         case ActionTypes.DELETE_STAFF:
-            //var staff = action.payload;
             return {...state, staffs: action.payload};
-
 
         default:
             return state;

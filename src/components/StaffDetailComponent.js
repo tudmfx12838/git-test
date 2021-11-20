@@ -4,6 +4,8 @@ import { Card, CardText, CardBody, CardTitle, CardImg, Breadcrumb, BreadcrumbIte
 import { Link } from 'react-router-dom';
 
 function RenderStaff({staff, departments}){
+    const department = departments.filter(department => department.id == staff.departmentId)[0];
+    
     return(
         <Media className="border p-1 bg-warning">
             <Media left>
@@ -13,8 +15,7 @@ function RenderStaff({staff, departments}){
                 <Media heading> Họ và tên: <i>{staff.name}</i></Media>
                 <p> Ngày sinh: <i>{dateFormat(staff.doB, "dd/mm/yyyy")}</i></p>
                 <p> Ngày vào công ty: <i>{dateFormat(staff.startDate, "dd/mm/yyyy")}</i></p>
-                <p> Phòng ban: <i>{departments[0].id}</i></p>
-                {/* <p> Phòng ban: <i>{departments.filter(department => department.id == staff.departmentId)[0]}</i></p> */}
+                <p> Phòng ban: <i>{department.name}</i></p>
                 <p> Số ngày nghỉ còn lại: <i>{staff.annualLeave}</i></p>
                 <p> Số ngày đã làm thêm: <i>{staff.overTime}</i></p>
             </Media>

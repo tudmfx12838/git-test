@@ -4,7 +4,7 @@ import Select from 'react-select';
 import { Card, CardText, CardBody, CardTitle, CardImg, Breadcrumb, BreadcrumbItem, CardBlock, Media } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { render } from 'react-dom';
-
+import { Loading } from './LoadingComponent';
 
 function RenderSalary({staff}){
     return(
@@ -80,61 +80,68 @@ class Salary extends Component{
         //remove duplicate element array
         getSalary = [...new Set(getSalary)];
 
-        switch(this.state.selectedSort){
-            case 0:
-                salary = [];
-                salary = this.props.staffs.map((staff) => {
-                    return(
-                        <div key={staff.id} className="col-12 col-md-6 col-lg-4 my-1">
-                            <RenderSalary staff={staff}/>
-                        </div>
-                    );
-                });
-                break;
-            case 1:
-                salary = [];
-                salary = this.props.staffs.map((staff) => {
-                    return(
-                        <div key={staff.id} className="col-12 col-md-6 col-lg-4 my-1">
-                            <RenderSalary staff={staff}/>
-                        </div>
-                    );
-                }).reverse();
-                break;
-            case 2:
-                salary = [];
-                getSalary.sort(function(a, b){return a-b});
+        if(this.props.staffsSalaryLoading){
+            salary = <Loading />;
+        }else if(this.props.staffsErrMess){
+            salary = <h4>{this.props.staffsSalaryErrMess}</h4>;
+        }else{
 
-                for(let i = 0; i < getSalary.length ;i++){
-                    salary[i] = this.props.staffs.map((staff) => {
-                        if(staff.salary==getSalary[i]){
-                            return(
-                                <div key={staff.id} className="col-12 col-md-6 col-lg-4 my-1">
-                                    <RenderSalary staff={staff}/>
-                                </div>
-                            );
-                        }
-                    });                    
-                }
-                break;
-            case 3:
-                salary = [];  
-                getSalary.sort(function(a, b){return b-a});
-                
-                for(let i = 0; i < getSalary.length ;i++){
-                    salary[i] = this.props.staffs.map((staff) => {
-                        if(staff.salary==getSalary[i]){
-                            return(
-                                <div key={staff.id} className="col-12 col-md-6 col-lg-4 my-1">
-                                    <RenderSalary staff={staff}/>
-                                </div>
-                            );
-                        }
-                    });                    
-                }
-                break;
-            default:
-                break;
+            switch(this.state.selectedSort){
+                case 0:
+                    salary = [];
+                    salary = this.props.staffs.map((staff) => {
+                        return(
+                            <div key={staff.id} className="col-12 col-md-6 col-lg-4 my-1">
+                                <RenderSalary staff={staff}/>
+                            </div>
+                        );
+                    });
+                    break;
+                case 1:
+                    salary = [];
+                    salary = this.props.staffs.map((staff) => {
+                        return(
+                            <div key={staff.id} className="col-12 col-md-6 col-lg-4 my-1">
+                                <RenderSalary staff={staff}/>
+                            </div>
+                        );
+                    }).reverse();
+                    break;
+                case 2:
+                    salary = [];
+                    getSalary.sort(function(a, b){return a-b});
+
+                    for(let i = 0; i < getSalary.length ;i++){
+                        salary[i] = this.props.staffs.map((staff) => {
+                            if(staff.salary==getSalary[i]){
+                                return(
+                                    <div key={staff.id} className="col-12 col-md-6 col-lg-4 my-1">
+                                        <RenderSalary staff={staff}/>
+                                    </div>
+                                );
+                            }
+                        });                    
+                    }
+                    break;
+                case 3:
+                    salary = [];  
+                    getSalary.sort(function(a, b){return b-a});
+                    
+                    for(let i = 0; i < getSalary.length ;i++){
+                        salary[i] = this.props.staffs.map((staff) => {
+                            if(staff.salary==getSalary[i]){
+                                return(
+                                    <div key={staff.id} className="col-12 col-md-6 col-lg-4 my-1">
+                                        <RenderSalary staff={staff}/>
+                                    </div>
+                                );
+                            }
+                        });                    
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
 
         const options = [
@@ -144,6 +151,7 @@ class Salary extends Component{
             { value: '3', label: 'Sắp xếp theo lương giảm dần'}
         ];
         const { selectedOption } = this.state;
+
 
         return(
             <div className="container">

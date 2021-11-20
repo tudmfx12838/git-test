@@ -84,6 +84,45 @@ export const addDepartments = (departments) => ({
 });
 
 
+export const fetchStaffsSalary = () => (dispatch) => {
+
+    dispatch(staffsSalaryLoading(true));
+
+    return fetch(baseUrl + 'staffsSalary')
+        .then(respone => {
+            if(respone.ok){
+                return respone;
+            }else{
+                var error = new Error('Error' + respone.status + ' : ' + respone.statusText);
+                error.respone = respone;
+                throw error;
+            }
+        },
+        error => {
+            var errmess = new Error(error.message);
+            throw errmess;
+        })
+        
+        .then(respone => respone.json())
+        .then(staffsSalary => dispatch(addstaffsSalary(staffsSalary)))
+        .catch(error => dispatch(staffsSalaryFailed(error.message)));
+    
+}
+
+export const staffsSalaryLoading = (bol) => ({
+    type: ActionTypes.STAFFSSALARY_LOADING,
+    payload: bol
+});
+
+export const staffsSalaryFailed = (errmess) => ({
+    type: ActionTypes.STAFFSSALARY_FAILED,
+    payload: errmess
+});
+
+export const addstaffsSalary = (staffsSalary) => ({
+    type: ActionTypes.ADD_STAFFSSALARY,
+    payload: staffsSalary
+});
 
 
 

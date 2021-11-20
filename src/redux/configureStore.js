@@ -12,7 +12,7 @@ export const ConfigureStore = () => {
         combineReducers({
             staffs: Staffs,
             departments: Departments,
-            // staffsSalary: StaffsSalary
+            staffsSalary: StaffsSalary
         }),
         applyMiddleware(thunk, logger)
     )

@@ -12,18 +12,20 @@ import Footer from './FooterComponent';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { fetchStaffs, fetchDepartments } from '../redux/ActionCreators';
+import { fetchStaffs, fetchDepartments, fetchStaffsSalary } from '../redux/ActionCreators';
 
 const mapStateToProps = state => {
   return {
     staffs: state.staffs,
-    departments: state.departments
+    departments: state.departments,
+    staffsSalary: state.staffsSalary
   }
 }
 
 const mapDispatchToProps = (dispatch) => ({
   fetchStaffs: () => {dispatch(fetchStaffs())},
-  fetchDepartments: () => {dispatch(fetchDepartments())}
+  fetchDepartments: () => {dispatch(fetchDepartments())},
+  fetchStaffsSalary: () => {dispatch(fetchStaffsSalary())}
 });
 
 class Main extends Component {
@@ -36,6 +38,7 @@ class Main extends Component {
   componentDidMount(){
     this.props.fetchStaffs();
     this.props.fetchDepartments();
+    this.props.fetchStaffsSalary();
   }
 
   // getNewStaff(newStaff){
@@ -65,7 +68,10 @@ class Main extends Component {
                                                                  departments={this.props.departments.departments} addStaff={(value)=>this.getNewStaff(value)}/>}/>
             {/* In case not adding exact, Although render more links /staff/1 /staff/2...., It's alway to /staff*/}
             <Route path="/department" component={()=><Department departments={this.props.departments.departments}/>}/>
-            <Route path="/salary" component={()=><Salary staffs={this.props.staffs}/>}/>
+            <Route path="/salary" component={()=><Salary staffs={this.props.staffsSalary.staffsSalary}
+                                                         staffsSalaryLoading={this.props.staffsSalary.isLoading}
+                                                         staffsSalaryErrMess={this.props.staffsSalary.errmess}
+                                                         />}/>
             <Route path="/staff/:staffId" component={StaffWithId}/>
 
             {/* <Route exact path="/contactus" component={() => <Contact/>}/> */}

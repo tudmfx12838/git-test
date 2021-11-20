@@ -1,6 +1,66 @@
 import * as ActionTypes from './ActionTypes';
 import { baseUrl } from '../shared/baseUrl';
 
+export const deleteStaff = (staffId) => ({
+    type: ActionTypes.DELETE_STAFF,
+    payload: staffId
+})
+
+export const fetchDeleteStaff = (staffId) => (dispatch) => {
+    // alert(staffId);
+    fetch('https://rjs101xbackend.herokuapp.com/staffs/' + staffId, {
+        method: 'DELETE',
+        })
+        .then(res => res.json()) // or res.json()
+        .then(res => {dispatch(deleteStaff(res))});
+        // .then(res => console.log(res))
+}
+
+export const postStaff = (name, doB, salaryScale, startDate, departmentId, annualLeave, overTime, image, salary) => (dispatch) =>{
+    const newStaff = {
+        name: name,
+        doB: doB,
+        salaryScale: salaryScale,
+        startDate: startDate,
+        departmentId: departmentId,
+        annualLeave: annualLeave,
+        overTime: overTime,
+        image: image,
+        salary: salary
+    }
+
+    return fetch(baseUrl + 'staffs', {
+        method: 'POST',
+        body: JSON.stringify(newStaff),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'same-origin'
+    })
+    .then(respone => {
+        if(respone.ok){
+            return respone;
+        }else{
+            var error = new Error('Error' + respone.status + ' : ' + respone.statusText);
+            error.respone = respone;
+            throw error;
+        }
+    },
+    error => {
+        var errmess = new Error(error.message);
+        throw errmess;
+    })
+    .then(respone => respone.json())
+    .then(staff => dispatch(addStaff(staff)))
+    .catch(error => { console.log('post staff', error.message); 
+                      alert('Your staff could not be posted\nError: ' + error.message);
+                    });
+}
+
+export const addStaff = (staff) => ({
+    type: ActionTypes.ADD_STAFF,
+    payload: staff
+});
 
 export const fetchStaffs = () => (dispatch) => {
 
@@ -24,7 +84,6 @@ export const fetchStaffs = () => (dispatch) => {
         .then(respone => respone.json())
         .then(staffs => dispatch(addStaffs(staffs)))
         .catch(error => dispatch(staffsFailed(error.message)));
-    
 }
 
 export const staffsLoading = (bol) => ({

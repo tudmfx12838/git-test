@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import dateFormat from 'dateformat';
 // import Select from 'react-select';
 import { Card, CardText, CardBody, CardTitle, CardImg, Breadcrumb, BreadcrumbItem, Button, Form, FormGroup, Input, Label, Col, Row, Modal, ModalBody, ModalHeader, FormFeedback } from 'reactstrap';
@@ -32,24 +32,61 @@ const StaffList = (props) => {
 const [isSearching, setisSearching] = useState(false);
 const [searchedKeyWord, setsearchedKeyWord] = useState('');
 const [isModalOpen, setisModalOpen] = useState(false);
-
-
-// const [id, setid] = useState('');
-// const [name, setname] = useState('');
-// const [doB, setdoB] = useState('');
-// const [salaryScale, setsalaryScale] = useState('');
-// const [startDate, setstartDate] = useState('');
-// const [department, setdepartment] = useState('');
-// const [annualLeave, setannualLeave] = useState('');
-// const [overTime, setoverTime] = useState('');
-// const [salary, setsalary] = useState('');
-// const [image, setimage] = useState('/assets/images/alberto.png');
-
+const [isSelecting, setisSelecting] = useState(false);
+const [selectOrDelete, setselectOrDelete] = useState({type: 'Chọn', color:'primary'});
+const [newStaffs, setNewStaffs] = useState([]);
 
 var search;
+var select = [];
+// var selectOrDeleteButton = 'Chọn';
+
+const fetchNewData = ()=>{
+    return fetch(baseUrl + 'staffs')
+        .then(respone => {
+            if(respone.ok){
+                return respone;
+            }else{
+                var error = new Error('Error' + respone.status + ' : ' + respone.statusText);
+                error.respone = respone;
+                throw error;
+            }
+        },
+        error => {
+            var errmess = new Error(error.message);
+            throw errmess;
+        })
+        
+        .then(respone => respone.json())
+        .then(staffs => setNewStaffs(staffs))
+}
+
+function handleSelect(event){
+    setisSelecting(!isSelecting);
+    if(isSelecting){
+        setselectOrDelete({type: 'Chọn', color:'primary'})
+
+        for(let id=0; id < select.length; id++){
+            if(select[id].checked){
+                // fetch('https://rjs101xbackend.herokuapp.com/staffs/' + select[id].name, {
+                //   method: 'DELETE',
+                //   })
+                //   .then(res => res.text()) // or res.json()
+                //   .then(res => console.log(res))
+                props.fetchDeleteStaff(select[id].name);
+            }
+        }
+    }else{
+        setselectOrDelete({type: 'Xóa', color:'danger'})
+    }
+}
+
+function getSelectedStaff(event){
+    // for(let i=0; i<select.length; i++){
+    //     alert(select[i].name);}
+}
 
 function handleSearch(event){
-    // alert("value: " + search.value);
+    // alert("value: " + search.name);
     if(search.value){
         setisSearching(true);
         setsearchedKeyWord(search.value.toUpperCase());
@@ -72,20 +109,22 @@ function handleSubmit(value){
     setsearchedKeyWord('');
     //console.log("Current State is: " + JSON.stringify(value));
     setisModalOpen(!isModalOpen);
-    const newstaff = Object.assign({},value, {'image': '/assets/images/alberto.png'});
 
-    const department = props.departments.find((department) => department.name == newstaff.department);
-    newstaff.department = department;
-    newstaff.id = props.staffs.length;
 
+    // postStaff: (name, doB, salaryScale, startDate, departmentId, annualLeave, overTime, image, salary)
+    const department = props.departments.find((department) => department.name == value.department);
+    const image = '/asset/images/alberto.png';
+    props.postStaff(value.name, value.doB, value.salaryScale, value.startDate, department.id,
+                         value.annualLeave, value.overTime, image ,value.salary);
+    fetchNewData()                     
     
-    // alert("Current State is: " + JSON.stringify(newstaff));
-
-    //callback to return to Main Component
-    props.addStaff(newstaff);
-    // event.preventDefault();
 }
-    
+
+useEffect(() => {
+  fetchNewData()
+}, [])
+
+
         var staff;
         if(props.staffsLoading){
             staff = <Loading />;
@@ -94,7 +133,10 @@ function handleSubmit(value){
         }else{
 
             if(isSearching){
-                staff = props.staffs.map((staff) => {
+                // staff = newStaffs&&newStaffs
+                // staff = props.staffs.map((staff) =>
+                staff = newStaffs.map((staff) =>
+                 {
                     const temp = staff.name.toUpperCase();
                     //Kiem tra co giong ten
                     if(temp.endsWith(searchedKeyWord)){
@@ -112,8 +154,20 @@ function handleSubmit(value){
                         );
                     }
                 });
-            }else{
-                staff = props.staffs.map((staff) => {
+            }else if(isSelecting){
+                staff = newStaffs.map((staff)=> {
+                    return(
+                        <div key={staff.id} className="col-6 col-md-4 col-lg-2 my-1">
+                            <Input type="checkbox" id={staff.id} name={staff.id} 
+                                innerRef={(check) => select[select.length] = (check)} onChange={getSelectedStaff}/>
+                            <RenderStaff staff={staff}/>
+                        </div>
+                    );
+                });
+            }else{ 
+                // staff = newStaffs&&newStaffs
+                //staff = props.staffs.map((staff)
+                staff = newStaffs.map((staff)=> {
                     return(
                         <div key={staff.id} className="col-6 col-md-4 col-lg-2 my-1">
                             <RenderStaff staff={staff}/>
@@ -129,12 +183,17 @@ function handleSubmit(value){
                 <div className="col-6 col-md-3">
                     <h3>Nhân Viên</h3>
                 </div>
-                <div className="col-6 col-md-3 mt-1">
+                <div className="col-3 col-md-2 mt-1">
                     <Button type="button" onClick={toggleModal}>
                         <span  className="fa fa-plus-square"></span>
                     </Button>
                 </div>
-                <div className="col-12 col-md-6 mt-1">
+                <div className="col-3 col-md-2 mt-1">
+                    <Button type="button" color={selectOrDelete.color} onClick={handleSelect}>
+                        {selectOrDelete.type}
+                    </Button>
+                </div>
+                <div className="col-12 col-md-5 mt-1">
                     {/* <SearchStaff/> }*/}
                     <Form onSubmit={handleSearch}>
                         <FormGroup row>

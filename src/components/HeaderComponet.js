@@ -28,7 +28,7 @@ class Header extends Component{
                 {/* NavbarToggler show list button when the srceen size is following <Navbar dark expand="md"> (sm,lg..) */}
                 <NavbarToggler onClick={this.togglesNav}/>
                 <NavbarBrand className="mr-auto" href="/">
-                    <img src="assets/images/logo.png" height="30" width="41" alt="Ristorante Con Fustion"/>
+                    <img src="asset/images/logo.png" height="30" width="41" alt="Ristorante Con Fustion"/>
                 </NavbarBrand>
                 {/* Collapse hide and show by dropdowing, following <Navbar dark expand="md"> (sm,lg..) */}
                 {/* if isNavOpen is true, show Nav 

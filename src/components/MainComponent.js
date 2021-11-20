@@ -12,12 +12,19 @@ import Footer from './FooterComponent';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import { fetchStaffs, fetchDepartments } from '../redux/ActionCreators';
+
 const mapStateToProps = state => {
   return {
     staffs: state.staffs,
     departments: state.departments
   }
 }
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchStaffs: () => {dispatch(fetchStaffs())},
+  fetchDepartments: () => {dispatch(fetchDepartments())}
+});
 
 class Main extends Component {
   
@@ -26,18 +33,24 @@ class Main extends Component {
 
   }
 
-  getNewStaff(newStaff){
-    // alert("invoked")
-    // alert(JSON.stringify(newStaff));
-    //Add newStaff to database, but if page reload, it'll be removed.
-    this.props.staffs.push(newStaff);
-    //STAFFS.push(newStaff);
+  componentDidMount(){
+    this.props.fetchStaffs();
+    this.props.fetchDepartments();
   }
+
+  // getNewStaff(newStaff){
+  //   // alert("invoked")
+  //   // alert(JSON.stringify(newStaff));
+  //   //Add newStaff to database, but if page reload, it'll be removed.
+  //   this.props.staffs.push(newStaff);
+  //   //STAFFS.push(newStaff);
+  // }
 
   render(){
     const StaffWithId = ({match}) => {
       return(
-        <StaffDetail staff={this.props.staffs.filter((staff) => staff.id === parseInt(match.params.staffId,10))[0]}/>      
+        <StaffDetail staff={this.props.staffs.staffs.filter((staff) => staff.id === parseInt(match.params.staffId,10))[0]}
+                      departments={this.props.departments.departments}/>      
       );
     }
 
@@ -46,9 +59,12 @@ class Main extends Component {
           <Header />
           <Switch>
             {/* Adding exact that mean when render more links with the same path of head Ex: /staff/1 /staff/2....*/}
-            <Route exact path="/staff" component={()=><StaffList staffs={this.props.staffs} departments={this.props.departments} addStaff={(value)=>this.getNewStaff(value)}/>}/>
+            <Route exact path="/staff" component={()=><StaffList staffs={this.props.staffs.staffs} 
+                                                                 staffsLoading={this.props.staffs.isLoading}
+                                                                 staffsErrMess={this.props.staffs.errmess}
+                                                                 departments={this.props.departments.departments} addStaff={(value)=>this.getNewStaff(value)}/>}/>
             {/* In case not adding exact, Although render more links /staff/1 /staff/2...., It's alway to /staff*/}
-            <Route path="/department" component={()=><Department departments={this.props.departments}/>}/>
+            <Route path="/department" component={()=><Department departments={this.props.departments.departments}/>}/>
             <Route path="/salary" component={()=><Salary staffs={this.props.staffs}/>}/>
             <Route path="/staff/:staffId" component={StaffWithId}/>
 
@@ -62,4 +78,4 @@ class Main extends Component {
   }
 }
 
-export default withRouter(connect(mapStateToProps)(Main));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));

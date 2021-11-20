@@ -3,7 +3,7 @@ import dateFormat from 'dateformat';
 import { Card, CardText, CardBody, CardTitle, CardImg, Breadcrumb, BreadcrumbItem, Media } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
-function RenderStaff({staff}){
+function RenderStaff({staff, departments}){
     return(
         <Media className="border p-1 bg-warning">
             <Media left>
@@ -13,7 +13,8 @@ function RenderStaff({staff}){
                 <Media heading> Họ và tên: <i>{staff.name}</i></Media>
                 <p> Ngày sinh: <i>{dateFormat(staff.doB, "dd/mm/yyyy")}</i></p>
                 <p> Ngày vào công ty: <i>{dateFormat(staff.startDate, "dd/mm/yyyy")}</i></p>
-                <p> Phòng ban: <i>{staff.department.name}</i></p>
+                <p> Phòng ban: <i>{departments[0].id}</i></p>
+                {/* <p> Phòng ban: <i>{departments.filter(department => department.id == staff.departmentId)[0]}</i></p> */}
                 <p> Số ngày nghỉ còn lại: <i>{staff.annualLeave}</i></p>
                 <p> Số ngày đã làm thêm: <i>{staff.overTime}</i></p>
             </Media>
@@ -21,7 +22,7 @@ function RenderStaff({staff}){
     );
 }
 
-const StaffDetail = ({staff}) => {
+const StaffDetail = ({staff, departments}) => {
 
     return(
         <div className="container">
@@ -36,7 +37,7 @@ const StaffDetail = ({staff}) => {
                 </div>
             </div>
              <div className="row">
-                <RenderStaff staff={staff}/>
+                <RenderStaff staff={staff} departments={departments}/>
              </div>
         </div>
     );

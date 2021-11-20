@@ -4,6 +4,8 @@ import dateFormat from 'dateformat';
 import { Card, CardText, CardBody, CardTitle, CardImg, Breadcrumb, BreadcrumbItem, Button, Form, FormGroup, Input, Label, Col, Row, Modal, ModalBody, ModalHeader, FormFeedback } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { Control, LocalForm, Errors } from 'react-redux-form';
+import { Loading } from './LoadingComponent';
+import { baseUrl } from '../shared/baseUrl';
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -83,36 +85,43 @@ function handleSubmit(value){
     props.addStaff(newstaff);
     // event.preventDefault();
 }
+    
+        var staff;
+        if(props.staffsLoading){
+            staff = <Loading />;
+        }else if(props.staffsErrMess){
+            staff = <h4>{props.staffsErrMess}</h4>;
+        }else{
 
-    var staff;
-    if(isSearching){
-        staff = props.staffs.map((staff) => {
-            const temp = staff.name.toUpperCase();
-            //Kiem tra co giong ten
-            if(temp.endsWith(searchedKeyWord)){
-                return(
-                    <div key={staff.id} className="col-6 col-md-4 col-lg-2 my-1">
-                        <RenderStaff staff={staff}/>
-                    </div>
-                );
-            }//Kiem tra co giong ho
-            else if(temp.startsWith(searchedKeyWord)){
-                return(
-                    <div key={staff.id} className="col-6 col-md-4 col-lg-2 my-1">
-                        <RenderStaff staff={staff}/>
-                    </div>
-                );
+            if(isSearching){
+                staff = props.staffs.map((staff) => {
+                    const temp = staff.name.toUpperCase();
+                    //Kiem tra co giong ten
+                    if(temp.endsWith(searchedKeyWord)){
+                        return(
+                            <div key={staff.id} className="col-6 col-md-4 col-lg-2 my-1">
+                                <RenderStaff staff={staff}/>
+                            </div>
+                        );
+                    }//Kiem tra co giong ho
+                    else if(temp.startsWith(searchedKeyWord)){
+                        return(
+                            <div key={staff.id} className="col-6 col-md-4 col-lg-2 my-1">
+                                <RenderStaff staff={staff}/>
+                            </div>
+                        );
+                    }
+                });
+            }else{
+                staff = props.staffs.map((staff) => {
+                    return(
+                        <div key={staff.id} className="col-6 col-md-4 col-lg-2 my-1">
+                            <RenderStaff staff={staff}/>
+                        </div>
+                    );
+                });
             }
-        });
-    }else{
-        staff = props.staffs.map((staff) => {
-            return(
-                <div key={staff.id} className="col-6 col-md-4 col-lg-2 my-1">
-                    <RenderStaff staff={staff}/>
-                </div>
-            );
-        });
-    }
+        }
     
     return(
         <div className="container">

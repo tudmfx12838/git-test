@@ -16,6 +16,54 @@ export const fetchDeleteStaff = (staffId) => (dispatch) => {
         // .then(res => console.log(res))
 }
 
+export const putStaff = (staffId, name, doB, salaryScale, startDate, departmentId, annualLeave, overTime, image, salary) => (dispatch) =>{
+    const newStaff = {
+        name: name,
+        doB: doB,
+        salaryScale: salaryScale,
+        startDate: startDate,
+        departmentId: departmentId,
+        annualLeave: annualLeave,
+        overTime: overTime,
+        image: image,
+        salary: salary
+    }
+    alert(JSON.stringify(newStaff) + '  ' + staffId);
+
+    // return fetch(`${baseUrl}staffs/${staffId}.json`, {
+        return fetch(baseUrl + staffId, {
+        method: 'PUT',
+        body: JSON.stringify(newStaff),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'same-origin'
+    })
+    .then(respone => {
+        if(respone.ok){
+            return respone;
+        }else{
+            var error = new Error('Error' + respone.status + ' : ' + respone.statusText);
+            error.respone = respone;
+            throw error;
+        }
+    },
+    error => {
+        var errmess = new Error(error.message);
+        throw errmess;
+    })
+    .then(respone => respone.json())
+    .then(staff => dispatch(updateStaff(staff)))
+    .catch(error => { console.log('put staff', error.message); 
+                      alert('Your staff could not be putted\nError: ' + error.message);
+                    });
+}
+
+export const updateStaff = (staff) => ({
+    type: ActionTypes.UPDATE_STAFF,
+    payload: staff
+})
+
 export const postStaff = (name, doB, salaryScale, startDate, departmentId, annualLeave, overTime, image, salary) => (dispatch) =>{
     const newStaff = {
         name: name,

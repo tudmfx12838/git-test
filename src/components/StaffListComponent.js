@@ -38,6 +38,7 @@ const [isSelecting, setisSelecting] = useState(false);
 const [selectOrDelete, setselectOrDelete] = useState({type: 'Chọn', color:'primary'});
 const [isEditing, setisEditing] = useState(false);
 const [selectOrEdit, setselectOrEdit] = useState({type: 'Sửa', color:'primary'});
+const [selectedId, setselectedId] = useState(null);
 
 const [addOrEditStaff, setaddOrEditStaff] = useState({type: 'Thêm Nhân Viên', value: false});
 
@@ -72,6 +73,7 @@ function handleEdit(event){
     if(isEditing){
         setaddOrEditStaff({type: 'Cập nhật thông tin Nhân Viên: ' + select.find((select)=>select.checked === true).name, value: true});
         setselectOrEdit({type: 'Sửa', color:'primary'});
+        setselectedId(select.find((select)=>select.checked === true).name);
         setisModalOpen(!isModalOpen);
     }
     else{
@@ -132,13 +134,15 @@ function handleSubmit(value){
     //console.log("Current State is: " + JSON.stringify(value));
     setisModalOpen(!isModalOpen);
 
+    const department = props.departments.find((department) => department.name == value.department);
+    const image = '/asset/images/alberto.png';
+    const staffId = selectedId;
     if(addOrEditStaff.value){//UpdateStaff Feature
-
+        props.putStaff(staffId, value.name, value.doB, value.salaryScale, value.startDate, department.id,
+            value.annualLeave, value.overTime, image ,value.salary);
     }else{
         //AddStaff Feature
         // postStaff: (name, doB, salaryScale, startDate, departmentId, annualLeave, overTime, image, salary)
-        const department = props.departments.find((department) => department.name == value.department);
-        const image = '/asset/images/alberto.png';
         props.postStaff(value.name, value.doB, value.salaryScale, value.startDate, department.id,
                             value.annualLeave, value.overTime, image ,value.salary);
     }

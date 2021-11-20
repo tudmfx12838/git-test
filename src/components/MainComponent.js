@@ -13,7 +13,7 @@ import DepartmentDetail from './DepartmentDetailComponent';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { fetchStaffs, fetchDepartments, fetchStaffsSalary, postStaff, fetchDeleteStaff } from '../redux/ActionCreators';
+import { fetchStaffs, fetchDepartments, fetchStaffsSalary, postStaff, fetchDeleteStaff, putStaff } from '../redux/ActionCreators';
 
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
@@ -30,7 +30,8 @@ const mapDispatchToProps = (dispatch) => ({
   fetchDepartments: () => {dispatch(fetchDepartments())},
   fetchStaffsSalary: () => {dispatch(fetchStaffsSalary())},
   fetchDeleteStaff: (staffId) => {dispatch(fetchDeleteStaff(staffId))},
-  postStaff: (name, doB, salaryScale, startDate, departmentId, annualLeave, overTime, image, salary) => dispatch(postStaff(name, doB, salaryScale, startDate, departmentId, annualLeave, overTime, image, salary))
+  postStaff: (name, doB, salaryScale, startDate, departmentId, annualLeave, overTime, image, salary) => dispatch(postStaff(name, doB, salaryScale, startDate, departmentId, annualLeave, overTime, image, salary)),
+  putStaff: (staffId, name, doB, salaryScale, startDate, departmentId, annualLeave, overTime, image, salary) => dispatch(putStaff(staffId, name, doB, salaryScale, startDate, departmentId, annualLeave, overTime, image, salary))
 });
 
 class Main extends Component {
@@ -92,6 +93,7 @@ class Main extends Component {
                                                                     staffsErrMess={this.props.staffs.errmess}
                                                                     departments={this.props.departments.departments} 
                                                                     postStaff={this.props.postStaff}
+                                                                    putStaff={this.props.putStaff}
                                                                     fetchDeleteStaff={this.props.fetchDeleteStaff}
                                                                     //  addStaff={(value)=>this.getNewStaff(value)}
                                                                     />}/>

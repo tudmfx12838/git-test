@@ -6,8 +6,8 @@ import { Link } from 'react-router-dom';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Loading } from './LoadingComponent';
 
-import { FadeTransform } from 'react-animation-components';
-import { func } from 'prop-types';
+import { FadeTransform,  Fade, Stagger } from 'react-animation-components';
+// import { func } from 'prop-types';
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -32,15 +32,14 @@ function RenderStaff({staff}){
 const StaffList = (props) => {
 
 const [renderTypes, setrenderTypes] = useState({isIdle: false, isSearching: false, isSelecting: false, isEditing: false});
-const [isSearching, setisSearching] = useState(false);
+// const [isSearching, setisSearching] = useState(false);
+// const [isSelecting, setisSelecting] = useState(false);
+// const [isEditing, setisEditing] = useState(false);
 const [searchedKeyWord, setsearchedKeyWord] = useState('');
 const [isModalOpen, setisModalOpen] = useState(false);
-const [isSelecting, setisSelecting] = useState(false);
 const [selectOrDelete, setselectOrDelete] = useState({type: 'Chọn', color:'primary'});
-const [isEditing, setisEditing] = useState(false);
 const [selectOrEdit, setselectOrEdit] = useState({type: 'Sửa', color:'primary'});
 const [selectedId, setselectedId] = useState(null);
-
 const [addOrEditStaff, setaddOrEditStaff] = useState({type: 'Thêm Nhân Viên', value: false});
 
 // const [newStaffs, setNewStaffs] = useState([]);
@@ -70,10 +69,9 @@ var select = [];
 // }
 
 function handleEdit(event){
-    setrenderTypes((type)=>({...type, 
-                            isEditing: !renderTypes.isEditing}));
-    // alert(renderTypes.isEditing);
-    // setisEditing(!isEditing);
+    // setrenderTypes((type)=>({...type, 
+    //                         isEditing: !renderTypes.isEditing}));
+    setrenderTypes({isIdle: true, isSearching: false, isSelecting: false, isEditing: !renderTypes.isEditing});
     if(renderTypes.isEditing){
         setaddOrEditStaff({type: 'Cập nhật thông tin Nhân Viên: ' + select.find((select)=>select.checked === true).name, value: true});
         setselectOrEdit({type: 'Sửa', color:'primary'});
@@ -87,10 +85,10 @@ function handleEdit(event){
 
 
 function handleSelect(event){
-    setrenderTypes((type)=>({...type, 
-                            isSelecting: !renderTypes.isSelecting}));
-    // setisSelecting(!isSelecting);
-    //alert(JSON.stringify(renderTypes));
+    // setrenderTypes((type)=>({...type, 
+    //                         isSelecting: !renderTypes.isSelecting}));
+    setrenderTypes({isIdle: true, isSearching: false, isSelecting: !renderTypes.isSelecting, isEditing: false});
+
     if(renderTypes.isSelecting){
         setselectOrDelete({type: 'Chọn', color:'primary'})
 
@@ -109,22 +107,17 @@ function handleSelect(event){
     }
 }
 
-function getSelectedStaff(event){
-    // for(let i=0; i<select.length; i++){
-    //     alert(select[i].name);}
-}
-
 function handleSearch(event){
     // alert("value: " + search.name);
     if(search.value){
-        setrenderTypes((type)=>({...type, 
-                        isSearching: true}));
-        // setisSearching(true);
+        // setrenderTypes((type)=>({...type, 
+        //                 isSearching: true}));
+        setrenderTypes({isIdle: true, isSearching: true, isSelecting: false, isEditing: false});
         setsearchedKeyWord(search.value.toUpperCase());
     }else{
-        setrenderTypes((type)=>({...type, 
-                        isSearching: false}));
-        // setisSearching(false);
+        // setrenderTypes((type)=>({...type, 
+        //                 isSearching: false}));
+        setrenderTypes({isIdle: true, isSearching: false, isSelecting: false, isEditing: false});
         setsearchedKeyWord('');
     }
     event.preventDefault();
@@ -132,16 +125,10 @@ function handleSearch(event){
 
 function toggleModal(event){
     setisModalOpen(!isModalOpen);
-        // this.setState({
-        //     isModalOpen: !this.state.isModalOpen
-        // });
 }
 
 function handleSubmit(value){
-    // setisSearching(false);
-    // setisSelecting(false);
-    // setisEditing(false);
-    setrenderTypes({isIdle: false, isSearching: false, isSelecting: false, isEditing: false});
+    setrenderTypes({isIdle: true, isSearching: false, isSelecting: false, isEditing: false});
     setsearchedKeyWord('');
     //console.log("Current State is: " + JSON.stringify(value));
     setisModalOpen(!isModalOpen);
@@ -222,6 +209,14 @@ function handleSubmit(value){
                         </div>
                     );
                 });
+            }else if(renderTypes.isIdle){
+                staff = props.staffs.map((staff)=> {
+                    return(
+                            <div key={staff.id} className="col-6 col-md-4 col-lg-2 my-1">
+                                    <RenderStaff staff={staff}/>
+                            </div>
+                    );
+                });
             }else{ 
                 // staff = newStaffs&&newStaffs
                 //staff = props.staffs.map((staff)
@@ -233,9 +228,7 @@ function handleSubmit(value){
                                 transformProps={{
                                     exitTransform: 'scale(0.5) translateY(-50%)'
                                 }}>
-
                                     <RenderStaff staff={staff}/>
-
                                 </FadeTransform>
                             </div>
                        

@@ -17,12 +17,20 @@ export const Staffs = (state ={
 
         case ActionTypes.ADD_STAFF:
             var staff = action.payload;
-            //fetch tra ve toan bo db, vi the can cat di phan khong can thiet, 2h sang moi xong @@
+            //fetch tra ve toan bo db, vi the can cat di phan khong can thiet
+            //hoac update toan bo redux store
+            // return {staffs: action.payload};
             staff.splice(0,state.staffs.length);
             return {...state, staffs: state.staffs.concat(staff)};
 
+
         case ActionTypes.DELETE_STAFF:
             return {...state, staffs: action.payload};
+
+        case ActionTypes.UPDATE_STAFF:
+            console.log(JSON.stringify(action.payload));
+            // , staffs: action.payload
+            return {staffs: action.payload};
 
         default:
             return state;

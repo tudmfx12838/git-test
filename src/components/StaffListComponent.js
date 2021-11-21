@@ -31,6 +31,7 @@ function RenderStaff({staff}){
 //function StaffList(props)/({staffs})
 const StaffList = (props) => {
 
+const [renderTypes, setrenderTypes] = useState({isIdle: false, isSearching: false, isSelecting: false, isEditing: false});
 const [isSearching, setisSearching] = useState(false);
 const [searchedKeyWord, setsearchedKeyWord] = useState('');
 const [isModalOpen, setisModalOpen] = useState(false);
@@ -69,8 +70,11 @@ var select = [];
 // }
 
 function handleEdit(event){
-    setisEditing(!isEditing);
-    if(isEditing){
+    setrenderTypes((type)=>({...type, 
+                            isEditing: !renderTypes.isEditing}));
+    // alert(renderTypes.isEditing);
+    // setisEditing(!isEditing);
+    if(renderTypes.isEditing){
         setaddOrEditStaff({type: 'Cập nhật thông tin Nhân Viên: ' + select.find((select)=>select.checked === true).name, value: true});
         setselectOrEdit({type: 'Sửa', color:'primary'});
         setselectedId(select.find((select)=>select.checked === true).name);
@@ -83,8 +87,11 @@ function handleEdit(event){
 
 
 function handleSelect(event){
-    setisSelecting(!isSelecting);
-    if(isSelecting){
+    setrenderTypes((type)=>({...type, 
+                            isSelecting: !renderTypes.isSelecting}));
+    // setisSelecting(!isSelecting);
+    //alert(JSON.stringify(renderTypes));
+    if(renderTypes.isSelecting){
         setselectOrDelete({type: 'Chọn', color:'primary'})
 
         for(let id=0; id < select.length; id++){
@@ -110,10 +117,14 @@ function getSelectedStaff(event){
 function handleSearch(event){
     // alert("value: " + search.name);
     if(search.value){
-        setisSearching(true);
+        setrenderTypes((type)=>({...type, 
+                        isSearching: true}));
+        // setisSearching(true);
         setsearchedKeyWord(search.value.toUpperCase());
     }else{
-        setisSearching(false);
+        setrenderTypes((type)=>({...type, 
+                        isSearching: false}));
+        // setisSearching(false);
         setsearchedKeyWord('');
     }
     event.preventDefault();
@@ -127,9 +138,10 @@ function toggleModal(event){
 }
 
 function handleSubmit(value){
-    setisSearching(false);
-    setisSelecting(false);
-    setisEditing(false);
+    // setisSearching(false);
+    // setisSelecting(false);
+    // setisEditing(false);
+    setrenderTypes({isIdle: false, isSearching: false, isSelecting: false, isEditing: false});
     setsearchedKeyWord('');
     //console.log("Current State is: " + JSON.stringify(value));
     setisModalOpen(!isModalOpen);
@@ -165,7 +177,7 @@ function handleSubmit(value){
             staff = <h4>{props.staffsErrMess}</h4>;
         }else{
 
-            if(isSearching){
+            if(renderTypes.isSearching){
                 // staff = newStaffs&&newStaffs
                 // staff = props.staffs.map((staff) =>
                 staff = props.staffs.map((staff) =>
@@ -187,7 +199,7 @@ function handleSubmit(value){
                         );
                     }
                 });
-            }else if(isSelecting){
+            }else if(renderTypes.isSelecting){
                 select=[];
                 staff = props.staffs.map((staff)=> {
                     return(
@@ -199,7 +211,7 @@ function handleSubmit(value){
                     );
                 });
             }
-            else if(isEditing){
+            else if(renderTypes.isEditing){
                 select=[];
                 staff = props.staffs.map((staff)=> {
                     return(

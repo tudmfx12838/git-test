@@ -1,0 +1,25 @@
+Setting up Git
+Basic Git Commands
+Online Git Repositories
+Setting up Node.js and NPM
+Getting Started with React
+Configuring your React Application
+React Components
+React Components part 2
+Presentational and Container Components
+Functional Components
+Header and Footer
+React Router
+Single Page Applications Part 1
+Single Page Applications Part 2
+Controlled Forms
+Controlled Form Validation
+Uncontrolled Forms
+Introduction to Redux
+React Redux Form
+React Redux Form Validation
+Combining Reducers
+Redux Actions
+Redux Thunk
+Setting up a Server using json-server
+React Animations

@@ -72,6 +72,11 @@ class Header extends Component{
                                     <span className="fa fa-address-card fa-lg"></span>Contact Us
                                 </NavLink>
                             </NavItem>
+                            <NavItem>
+                                <NavLink className="nav-link" to="/practice">
+                                    <span className="fa fa-address-card fa-lg"></span>Practice
+                                </NavLink>
+                            </NavItem>
                         </Nav>
                         <Nav className="ml-auto" navbar>
                             <NavItem  >

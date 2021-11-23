@@ -7,6 +7,7 @@ import Contact from './ContactComponet';
 import Footer from './FooterComponent';
 import Menu  from './MenuComponent';
 import DishDetail from './DishdetailComponent';
+import Practice from './PracticeComponent';
 
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 //withRouter cau hinh ket noi React component voi Redux
@@ -119,6 +120,11 @@ class Main extends Component {
                 {/* <Route exact path="/contactus" component={() => <Contact/>}/> */}
                 <Route exact path="/contactus" component={() => <Contact resetFeedbackForm={this.props.resetFeedbackForm}
                                                                           postFeedback={this.props.postFeedback}/>}/>
+
+                <Route path="/practice" component={() => <Practice/>}/>
+
+
+
                 <Redirect to="/home" />{/* if not map above, it's alway to redirect */}
               </Switch>
             </CSSTransition>

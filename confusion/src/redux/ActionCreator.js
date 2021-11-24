@@ -1,7 +1,12 @@
 import * as ActionTypes from './ActionTypes';
 // import { DISHES } from "../components/shared/dishes";
-import { baseUrl } from '../shared/baseUrl';
+import { baseUrl, StaffsUrl } from '../shared/baseUrl';
 
+
+export const addInput = (value) => ({
+    type:ActionTypes.ADD_PRACTICE_DATA,
+    payload: value
+})
 
 export const addFeedback= (feedback) => ({
     type: ActionTypes.ADD_FEEDBACK,

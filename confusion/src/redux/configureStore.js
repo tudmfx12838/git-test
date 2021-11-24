@@ -8,6 +8,8 @@ import { Comments } from "./comments";
 import { Promotions } from "./promotins";
 import { Leaders } from "./leaders";
 
+import { PracticeState } from "./practiceState";
+
 import { Feedbacks } from "./feedbacks";
 
 //import applyMiddleware, thunk, logger
@@ -27,7 +29,8 @@ export const ConfigureStore = () => {
             ...createForms({
                 feedback: InitialFeedback
             }),
-
+            practicestate: PracticeState,
+    
             feedbacks: Feedbacks
         }),
         applyMiddleware(thunk, logger)

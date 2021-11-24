@@ -14,7 +14,7 @@ import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 //Import Action from ActionCreator.js
-import { postComment, fetchDishes, fetchComments, fetchPromos, fetchLeaders, postFeedback } from '../redux/ActionCreator';
+import { postComment, fetchDishes, fetchComments, fetchPromos, fetchLeaders, postFeedback, addInput } from '../redux/ActionCreator';
 
 //
 import { actions } from 'react-redux-form';
@@ -29,11 +29,14 @@ const mapStateToProps = state => {
     dishes: state.dishes,
     comments: state.comments,
     promotions: state.promotions,
-    leaders: state.leaders
+    leaders: state.leaders,
+    practicestate: state.practicestate
   }
 }
 //Anh xa thanh props
 const mapDispatchToProps = (dispatch) => ({
+  addInput: (value) => dispatch(addInput(value)),
+
   postComment: (dishId, rating, author, comment) => dispatch(postComment(dishId, rating, author, comment)),
 
   postFeedback: (firstname,lastname,telnum,email,agree,contactType,message) => dispatch(postFeedback(firstname,lastname,telnum,email,agree,contactType,message)),
@@ -121,7 +124,8 @@ class Main extends Component {
                 <Route exact path="/contactus" component={() => <Contact resetFeedbackForm={this.props.resetFeedbackForm}
                                                                           postFeedback={this.props.postFeedback}/>}/>
 
-                <Route path="/practice" component={() => <Practice/>}/>
+                <Route path="/practice" component={() => <Practice practicestate={this.props.practicestate}
+                                                                   addInput={this.props.addInput}/>}/>
 
 
 

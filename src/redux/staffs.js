@@ -25,7 +25,7 @@ export const Staffs = (state ={
 
 
         case ActionTypes.DELETE_STAFF:
-            return {...state, staffs: action.payload};
+            return {staffs: action.payload};
 
         case ActionTypes.UPDATE_STAFF:
             console.log(JSON.stringify(action.payload));
